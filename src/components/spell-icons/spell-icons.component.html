@@ -1,0 +1,19 @@
+<ion-grid>
+    <ion-row>
+        <ion-col>
+            <img class="healIcon0" [ngClass]="{'healicon-fade': _isHealOnCooldown('0001')}" src="assets/images/0001.jpg"/>
+        </ion-col>
+        <ion-col>
+            <img class="healIcon1" [ngClass]="{'healicon-fade': _isHealOnCooldown('0002')}" src="assets/images/0002.jpg"/>
+        </ion-col>
+        <ion-col>
+            <img class="healIcon2" [ngClass]="{'healicon-fade': _isHealOnCooldown('0003')}" src="assets/images/0003.jpg"/>
+        </ion-col>
+        <ion-col>
+            <img class="healIcon3" [ngClass]="{'healicon-fade': _isHealOnCooldown('0004')}" src="assets/images/0004.jpg" (click)="_innervate()" />
+        </ion-col>
+        <ion-col>
+            <img class="healIcon4" [ngClass]="{'healicon-fade': _isHealOnCooldown('0005')}" src="assets/images/0005.jpg"(click)="_tranquility()" />
+        </ion-col>
+    </ion-row>
+</ion-grid>
