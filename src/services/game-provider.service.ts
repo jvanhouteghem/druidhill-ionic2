@@ -24,13 +24,27 @@ export class GameProviderService extends Pause{
   }
 
   startGame() {
+
+    // Arrête les parties en cour
+    //this.stopGame();
+
+    // Démarre une nouvelle partie
     this.playerProviderService.setPlayer("Lea", 20000, 15500);
+    this.playerProviderService.getPlayer().updateMana(-7000);
+    this.initializeHealthBar();
+    this.initializeManaBar();
+    this.playerProviderService.startPlayerManaRegen();
     this.raidProviderService.generateRaid();
     this.bossProviderService.setBoss(new Boss("THEBOSS", 100000, "hard"));
-    this.bossProviderService.doBossPattern();
-    this.playerProviderService.startPlayerManaRegen();
-    this.initializeHealthBar();
-    this.initializeManaBar();    
+    this.bossProviderService.startBossPattern();
+    this.bossProviderService.startRaidDmgOnBoss();
+    
+  }
+
+  stopGame(){
+    this.playerProviderService.stopPlayerManaRegen(); // observable.timer
+    //FAIL this.raidDmgService.stopChangeHeroHealthOnTime(); // source.subscribe(observer)
+    this.bossProviderService.stopBossPaternSubscription(); // source.subscribe(observer)
   }
 
   initializeHealthBar() {

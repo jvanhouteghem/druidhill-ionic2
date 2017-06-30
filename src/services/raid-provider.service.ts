@@ -15,12 +15,12 @@ export const CLASSCOLORS = {
 @Injectable()
 export class RaidProviderService {
 
-private raid:Hero[] = [];
+private raid:Hero[];
   private countHero: number;
 
   constructor (private playerProviderService:PlayerProviderService) { 
     'ngInject';
-    this.countHero = -1; 
+    this.countHero = -1;
   }
 
   // Incremental for each hero
@@ -34,6 +34,9 @@ private raid:Hero[] = [];
   }
 
   generateRaid(){
+
+    this.raid = [];
+
     this.raid.push(new Hero(this.generateHeroId(), this._getPlayer().getName(), this._getPlayer().getCurrentHealth(), CLASSCOLORS.druid, false, true));
     this.raid.push(new Hero(this.generateHeroId(), 'Max', 15000, CLASSCOLORS.hunt));
     this.raid.push(new Hero(this.generateHeroId(), 'Ark', 30000, CLASSCOLORS.war, true));
@@ -58,7 +61,7 @@ private raid:Hero[] = [];
     this.raid.push(new Hero(this.generateHeroId(), 'Naz', 12000, CLASSCOLORS.pal));
     
     // Add default dmg
-    //this.raid[0].setDmgTaken(2000);
+    this.raid[0].setDmgTaken(12000);
     /*this.raid[2].setDmgTaken(3000);
     this.raid[5].setDmgTaken(1000);
     this.raid[7].setDmgTaken(5000);

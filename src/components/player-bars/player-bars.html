@@ -1,12 +1,12 @@
 <div id="topBars">
   <!-- health bar -->
   <div id="progressBarContainer">
-    <div id="heathTextBar">{{getPlayer().getCurrentHealth()}}/{{getPlayer().getBaseHealth()}}</div>
+    <div id="heathTextBar">{{getPlayerFormatHealth()}}</div>
     <div id="healthBar"></div>
   </div>
   <!-- mana bar -->
   <div id="progressBarContainer">
-    <div id="manaTextBar">{{getPlayer().getCurrentMana()}}/{{getPlayer().getBaseMana()}}</div>
+    <div id="manaTextBar">{{getPlayerFormatMana()}}</div>
     <div id="manaBar"></div>
   </div>
   <!-- progress bar -->

@@ -17,7 +17,7 @@ export class RaidDmgService {
 
   private healJson;
 
-  private changeHealthSubscription;
+  private changeHeroHealthOnTimeSubscription;
   private changeManaSubscription;
   private playerCastingSubscription;
 
@@ -68,21 +68,35 @@ export class RaidDmgService {
     this.updateIfPlayer(hero);
   }
 
-  changeHeroHealthOnTime(hero, inputValue, milliSecondByTick = 1000, nbTick = 1) {
+  getChangeHeroHealthOnTimeSubscription(){
+    return this.changeHeroHealthOnTimeSubscription;
+  }
+
+  startChangeHeroHealthOnTime(hero, inputValue, milliSecondByTick = 1000, nbTick = 1) {
     // Observable emits
-    var source = Rx.Observable
+    let source = Rx.Observable
       .interval(milliSecondByTick)
       //.timeInterval()
       .take(nbTick); // call complete() after nbTick is done
 
     // Observer receive
-    var observer = {
-      next: x => this.changeHeroHealth(hero, inputValue),
+    let observer = {
+      next: x => {this.changeHeroHealth(hero, inputValue), console.log("startChangeHeroHealthOnTime tick")},
       error: err => console.error('Observer got an error: ' + err),
       complete: () => console.log('Observer got a complete notification : heal done'),
     };
 
-    this.changeHealthSubscription = source.subscribe(observer);
+    this.changeHeroHealthOnTimeSubscription = source.subscribe(observer);
+    //this.changeHeroHealthOnTimeSubscription.unsubscribe();
+  }
+
+  stopChangeHeroHealthOnTime(){
+    if (this.getChangeHeroHealthOnTimeSubscription()){
+      this.getChangeHeroHealthOnTimeSubscription().unsubscribe();
+    } else {
+      console.log("stopChangeHeroHealthOnTime : this.getChangeHeroHealthOnTimeSubscription()", this.getChangeHeroHealthOnTimeSubscription());
+    }
+    
   }
 
   changePlayerMana(inputValue: number) {
@@ -124,7 +138,7 @@ export class RaidDmgService {
     let currentHeal = this.spellProviderService.getHealById(SPELLID);
     if (hero.isHealingPossible() && this.playerProviderService.getPlayer().isEnoughMana(currentHeal.cost) && !this.spellProviderService.isHealOnCooldown(SPELLID, moment().clone())) {
       this.spellProviderService.tryAddSpellOnHero(hero, SPELLID, moment()); // used to calculate cooldown
-      this.changeHeroHealthOnTime(hero, currentHeal.amount, currentHeal.time.period, currentHeal.time.duration/currentHeal.time.period);
+      this.startChangeHeroHealthOnTime(hero, currentHeal.amount, currentHeal.time.period, currentHeal.time.duration/currentHeal.time.period);
       this.playerProviderService.updateBothManaAndBar(currentHeal.cost);
     }
   }
@@ -157,7 +171,7 @@ export class RaidDmgService {
       for (let i = 0; i < heroListToHeal.length; i++) {
         if (heroListToHeal[i].isHealingPossible() && this.playerProviderService.getPlayer().isEnoughMana(currentHeal.cost)) {
           this.spellProviderService.tryAddSpellOnHero(heroListToHeal[i], SPELLID, moment()); // used to calculate cooldown
-          this.changeHeroHealthOnTime(heroListToHeal[i], currentHeal.amount, currentHeal.time.period, currentHeal.time.duration/currentHeal.time.period);
+          this.startChangeHeroHealthOnTime(heroListToHeal[i], currentHeal.amount, currentHeal.time.period, currentHeal.time.duration/currentHeal.time.period);
         }
       }
     }
@@ -177,7 +191,7 @@ export class RaidDmgService {
     this.playerProviderService.updateBothManaAndBar(currentHeal.cost);
     for (let i = 0; i < raid.length; i++) {
       this.spellProviderService.tryAddSpellOnHero(raid[i], SPELLID, moment()); // used to calculate cooldown
-      this.changeHeroHealthOnTime(raid[i], currentHeal.amount, currentHeal.time.period, currentHeal.time.duration/currentHeal.time.period);
+      this.startChangeHeroHealthOnTime(raid[i], currentHeal.amount, currentHeal.time.period, currentHeal.time.duration/currentHeal.time.period);
     }
   }
 
@@ -201,7 +215,6 @@ export class RaidDmgService {
       error: err => console.error('Observer got an error: ' + err),
       complete: () => { console.log('Observer got a complete notification : player progress bar loaded'), doWhenCastComplete() },
     };
-
     this.playerCastingSubscription = source.subscribe(observer);
   }
 

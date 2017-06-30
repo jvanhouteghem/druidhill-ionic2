@@ -7,7 +7,7 @@ import { RaidProviderService } from './raid-provider.service';
 export class SpellProviderService {
 
 
-  private globalCooldown:number = 1000;
+  private globalCooldown: number = 1000;
 
   // id : unique, match with .img
   // name
@@ -148,13 +148,16 @@ export class SpellProviderService {
   }
 
   isHealOnCooldown(spellId: string, inputMoment) {
-    let lastTimeSpellUsed = this.getLastTimeSpellUsed();
-    let isGlobalCooldown = !inputMoment.clone().subtract(this.globalCooldown, 'millisecond').isAfter(lastTimeSpellUsed);
+    if (this.raidProviderService.getRaid()) {
+      let lastTimeSpellUsed = this.getLastTimeSpellUsed();
+      let isGlobalCooldown = !inputMoment.clone().subtract(this.globalCooldown, 'millisecond').isAfter(lastTimeSpellUsed);
 
-    let lastTimeInputHealUsed = this.getLastTimeSpellUsed(spellId);
-    let isHealOnCooldown = !inputMoment.clone().subtract(this.getHealById(spellId).cooldown, 'millisecond').isAfter(lastTimeInputHealUsed);
+      let lastTimeInputHealUsed = this.getLastTimeSpellUsed(spellId);
+      let isHealOnCooldown = !inputMoment.clone().subtract(this.getHealById(spellId).cooldown, 'millisecond').isAfter(lastTimeInputHealUsed);
 
-    return isGlobalCooldown || isHealOnCooldown;
+      return isGlobalCooldown || isHealOnCooldown;
+    }
+    return false; // todo reput true by default
   }
 
   tryAddSpellOnHero(hero: Hero, inputSpellId, inputSpellUsedTime) {
@@ -171,7 +174,7 @@ export class SpellProviderService {
   getHealCooldown(spellId: string, inputMoment) {
     var now = inputMoment; //todays date
     var lastTime = this.getLastTimeSpellUsed(spellId) // another date
-    var duration = this.getHealById(spellId).cooldown/1000 - Math.round(moment.duration(now.diff(lastTime)).asSeconds());
+    var duration = this.getHealById(spellId).cooldown / 1000 - Math.round(moment.duration(now.diff(lastTime)).asSeconds());
     return duration > 0 ? duration + "s" : "";
   }
 

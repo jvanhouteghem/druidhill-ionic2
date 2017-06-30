@@ -11,8 +11,8 @@
 
   <player-bars></player-bars>
   <ion-grid>
-    <ion-row> <!-- (dblclick)="doubleClickOnHero($event, n.getId())"  -->
-      <ion-col *ngFor="let n of _getRaid()"> <!-- | slice 0:5 -->
+    <ion-row> <!-- | slice 0:5 -->
+      <ion-col *ngFor="let n of _getRaid()"> 
       <div class="box" (contextmenu)="rightClickOnHero($event, n.getId())" (click)="leftClickOnHero($event, n.getId())" [ngStyle]="{'background':getCSSGradient(n.getId())}"
           [ngClass]="{'box-border-red': n.isSpellActive('0001'), 'box-border-green': n.isSpellActive('0005')}" ng-mousedown="clickOnHero($event, n.getId())">
           
@@ -43,5 +43,8 @@
   <boss-bars></boss-bars>
 
   <spell-icons></spell-icons>
+
+  <button (click)="_startGame()">Start</button>   
+  <button (click)="_stopGame()">Stop</button>
 
 </ion-content>

@@ -5,22 +5,26 @@ import { BossProviderService } from './../../services/boss-provider.service';
   selector: 'boss-bars',
   templateUrl: './boss-bars.html'
 })
-export class BossBarsComponent implements OnInit {
+export class BossBarsComponent /*implements OnInit*/ {
 
   constructor(
     private bossProviderService:BossProviderService
   ) { }
 
-  ngOnInit() {
+  /*ngOnInit() {
     this.bossProviderService.startRaidDmgOnBoss();
-  }
+  }*/
 
-  _getBossCurrentHealth(){
+  /*_getBossCurrentHealth(){
     return this.bossProviderService.getBoss().getCurrentHealth();
   }
 
   _getBossBaseHealth(){
     return this.bossProviderService.getBoss().getBaseHealth();
+  }*/
+
+  _getBossFormatHealth(){
+    return this.bossProviderService.getBoss() ? this.bossProviderService.getBoss().getCurrentHealth() + "/" + this.bossProviderService.getBoss().getCurrentHealth() : "";
   }
 
 }

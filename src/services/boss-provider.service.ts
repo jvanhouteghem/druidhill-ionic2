@@ -10,7 +10,8 @@ import * as Rx from "rxjs/Rx";
 @Injectable()
 export class BossProviderService {
 
-  boss: Boss;
+  private boss: Boss;
+  private bossPaternSubscriptions = [];
 
   constructor(
     private raidProviderService: RaidProviderService,
@@ -54,8 +55,6 @@ export class BossProviderService {
   // Boss attacks
   // =======================
 
-  private bossPaternSubscription;
-
   getTarget(targetId: String) {
     let target = null;
     switch (targetId) {
@@ -87,16 +86,16 @@ export class BossProviderService {
     }
   }
 
-  doBossPattern(){
+  startBossPattern(){
     let attacks = this.boss.getAttacks(this.boss.getDifficulty());
     for (let i = 0 ; i < attacks.length ; i++){
-      this.doBossAttack(attacks[i]);
+      this.bossPaternSubscriptions.push(this.doBossAttack(attacks[i]));
     }
+    //this.doBossAttack(attacks[0]);
   }
 
   doBossAttack(attack) {
-    var source = Rx.Observable
-      .interval(attack.period);
+    let timer = Rx.Observable.timer(0,attack.period);
 
     var observer = {
       next: () => this.attackDispatcher(attack),
@@ -104,7 +103,17 @@ export class BossProviderService {
       complete: () => console.log('Observer got a complete notification : heal done'),
     };
 
-    this.bossPaternSubscription = source.subscribe(observer);
+    return timer.subscribe(observer);
+  }
+
+  getBossPaternSubscriptions(){
+    return this.bossPaternSubscriptions;
+  }
+
+  stopBossPaternSubscription(){
+    for (let i = 0 ; this.getBossPaternSubscriptions() && i < this.getBossPaternSubscriptions().length ; i++){
+      this.getBossPaternSubscriptions()[i].unsubscribe();
+    }
   }
 
 }

@@ -9,6 +9,7 @@ import { GameProviderService } from './../../services/game-provider.service';
 import { Hero } from './../../models/characters/hero';
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import * as moment from 'moment/moment';
+import * as Rx from "rxjs/Rx";
 
 @Component({
   selector: 'page-grid',
@@ -33,7 +34,16 @@ export class GridPage {
   }
 
   ngOnInit() {
+    //this.gameProviderService.startGame();
+  }
+
+  _startGame() {
+    console.log("startgame");
     this.gameProviderService.startGame();
+  }
+
+  _stopGame() {
+    this.gameProviderService.stopGame();
   }
 
   _getRaid() {
@@ -44,6 +54,19 @@ export class GridPage {
     let hero = this.raidProviderService.getRaid()[heroId];
     return "linear-gradient(0deg, " + hero.getClassColor() + " " + this._getHeroHealthInPercent(hero.getId()) + "%, #4a4a4a 0%)"; // Warning, don't add ";" in string // life / background
   }
+
+  /*
+  getCSSGradient(heroId: number) {
+    let hero = this.raidProviderService.getRaid()[heroId];
+    if (hero){
+      return "linear-gradient(0deg, " + hero.getClassColor() + " " + this._getHeroHealthInPercent(hero.getId()) + "%, #4a4a4a 0%)"; // Warning, don't add ";" in string // life / background
+    } else {
+      console.log("getCSSGradient - hero : ", hero);
+      return null;
+    }
+    
+  }
+  */
 
   _changeHeroHealth(hero: Hero, inputNb: number) {
     this.raidDmgService.changeHeroHealth(hero, inputNb);
@@ -57,20 +80,20 @@ export class GridPage {
     let that = this;
     this.leftClickCount++;
 
-    if (!that.pendingLeftClick){
+    if (!that.pendingLeftClick) {
       that.pendingLeftClick = true;
       setTimeout(function () {
         // double click
-        if (that.leftClickCount >= 2){
+        if (that.leftClickCount >= 2) {
           console.log("double click");
           let hero = that.raidProviderService.getRaid()[heroId];
           that.raidDmgService.healingTouch(hero);
-        } 
+        }
         // single click
         else {
-          console.log("single click"); 
+          console.log("single click");
           let hero = that.raidProviderService.getRaid()[heroId];
-          that.raidDmgService.rejuvenation(hero);     
+          that.raidDmgService.rejuvenation(hero);
         }
         that.leftClickCount = 0;
         that.pendingLeftClick = false;
