@@ -55,6 +55,14 @@ export class GridPage {
     return "linear-gradient(0deg, " + hero.getClassColor() + " " + this._getHeroHealthInPercent(hero.getId()) + "%, #4a4a4a 0%)"; // Warning, don't add ";" in string // life / background
   }
 
+  _getGame(){
+    return this.gameProviderService.getGame();
+  }
+
+  _resumeGame(){
+    this.gameProviderService.resumeGame();
+  }
+
   /*
   getCSSGradient(heroId: number) {
     let hero = this.raidProviderService.getRaid()[heroId];

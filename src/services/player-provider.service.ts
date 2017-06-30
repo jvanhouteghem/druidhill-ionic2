@@ -12,8 +12,8 @@ export class PlayerProviderService {
 
   constructor() { }
 
-  setPlayer(name:string, baseHealth:number, baseMana:number){
-    this.player = new Player(name, baseHealth, baseMana);
+  setPlayer(player:Player){
+    this.player = player;
   }
 
   getPlayer(){

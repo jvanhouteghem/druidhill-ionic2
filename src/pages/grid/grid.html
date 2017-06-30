@@ -46,5 +46,9 @@
 
   <button (click)="_startGame()">Start</button>   
   <button (click)="_stopGame()">Stop</button>
+  <button (click)="_resumeGame()">Resume</button>
+
+
+  {{_getGame() | json}}
 
 </ion-content>

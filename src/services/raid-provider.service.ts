@@ -61,7 +61,7 @@ private raid:Hero[];
     this.raid.push(new Hero(this.generateHeroId(), 'Naz', 12000, CLASSCOLORS.pal));
     
     // Add default dmg
-    this.raid[0].setDmgTaken(12000);
+    //this.raid[0].setDmgTaken(12000);
     /*this.raid[2].setDmgTaken(3000);
     this.raid[5].setDmgTaken(1000);
     this.raid[7].setDmgTaken(5000);
@@ -73,6 +73,10 @@ private raid:Hero[];
 
   getRaid():Hero[]{
     return this.raid;
+  }
+
+  setRaid(raid:Hero[]){
+    this.raid = raid;
   }
 
   getRandomAliveHero(){

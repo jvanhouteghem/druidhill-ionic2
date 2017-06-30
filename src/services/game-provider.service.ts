@@ -9,6 +9,7 @@ import { Subject } from 'rxjs/Subject';
 import * as moment from 'moment/moment';
 import {Pause} from '../models/pause';
 import { Boss } from '../models/characters/boss';
+import {Player} from './../models/characters/player';
 
 @Injectable()
 export class GameProviderService extends Pause{
@@ -23,13 +24,19 @@ export class GameProviderService extends Pause{
     super();
   }
 
+  private game;
+
+  getGame(){
+    return this.game;
+  }
+
   startGame() {
 
     // Arrête les parties en cour
     //this.stopGame();
 
     // Démarre une nouvelle partie
-    this.playerProviderService.setPlayer("Lea", 20000, 15500);
+    this.playerProviderService.setPlayer(new Player("Lea", 20000, 15500));
     this.playerProviderService.getPlayer().updateMana(-7000);
     this.initializeHealthBar();
     this.initializeManaBar();
@@ -46,6 +53,28 @@ export class GameProviderService extends Pause{
     this.raidDmgService.stopChangeHeroHealthOnTime();
     this.bossProviderService.stopBossPaternSubscription();
     this.bossProviderService.stopRaidDmgOnBoss();
+
+    this.saveGame();
+  }
+
+  saveGame(){
+    this.game = {
+      player: this.playerProviderService.getPlayer(),
+      raid: this.raidProviderService.getRaid(),
+      boss: this.bossProviderService.getBoss()
+    }
+  }
+
+  resumeGame(){
+    this.playerProviderService.setPlayer(this.game.player);
+    //this.playerProviderService.getPlayer().updateMana(-7000);
+    this.initializeHealthBar();
+    this.initializeManaBar();
+    this.playerProviderService.startPlayerManaRegen();
+    this.raidProviderService.setRaid(this.game.raid);
+    this.bossProviderService.setBoss(this.game.boss);
+    this.bossProviderService.startBossPattern();
+    this.bossProviderService.startRaidDmgOnBoss();
   }
 
   initializeHealthBar() {
