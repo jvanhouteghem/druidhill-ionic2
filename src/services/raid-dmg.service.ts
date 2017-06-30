@@ -74,10 +74,7 @@ export class RaidDmgService {
 
   startChangeHeroHealthOnTime(hero, inputValue, milliSecondByTick = 1000, nbTick = 1) {
     // Observable emits
-    let source = Rx.Observable
-      .interval(milliSecondByTick)
-      //.timeInterval()
-      .take(nbTick); // call complete() after nbTick is done
+    let timer = Rx.Observable.timer(0, milliSecondByTick).take(nbTick); // call complete() after nbTick is done
 
     // Observer receive
     let observer = {
@@ -86,7 +83,7 @@ export class RaidDmgService {
       complete: () => console.log('Observer got a complete notification : heal done'),
     };
 
-    this.changeHeroHealthOnTimeSubscription = source.subscribe(observer);
+    this.changeHeroHealthOnTimeSubscription = timer.subscribe(observer);
   }
 
   stopChangeHeroHealthOnTime(){

@@ -43,7 +43,7 @@ export class GameProviderService extends Pause{
 
   stopGame(){
     this.playerProviderService.stopPlayerManaRegen(); 
-    //FAIL this.raidDmgService.stopChangeHeroHealthOnTime(); 
+    this.raidDmgService.stopChangeHeroHealthOnTime();
     this.bossProviderService.stopBossPaternSubscription();
     this.bossProviderService.stopRaidDmgOnBoss();
   }
