@@ -12,6 +12,7 @@ export class BossProviderService {
 
   private boss: Boss;
   private bossPaternSubscriptions = [];
+  private raidDmgOnBossSubscription;
 
   constructor(
     private raidProviderService: RaidProviderService,
@@ -29,16 +30,29 @@ export class BossProviderService {
 
   startRaidDmgOnBoss() {
     this.initializeHealthBar();
-    let subscription: Subscription;
     let timer = Observable.timer(1000, 500);
-    subscription = timer.subscribe(t => {
-      let raidAliveLength = this.raidProviderService.getNbHeroAlive();
-      let minRaidDmg = 10 * raidAliveLength;
-      let maxRaidDmg = 35 * raidAliveLength;
-      let raidFinalDmg = Math.floor((Math.random() * maxRaidDmg) + minRaidDmg);
-      this.getBoss().setDmgTaken(this.getBoss().getDmgTaken() + raidFinalDmg)
-      this.updateHealthBar(this.getBoss().getCurrentHealthInPercent());
-    });
+    var observer = {
+      next: () => {
+        let raidAliveLength = this.raidProviderService.getNbHeroAlive();
+        let minRaidDmg = 10 * raidAliveLength;
+        let maxRaidDmg = 35 * raidAliveLength;
+        let raidFinalDmg = Math.floor((Math.random() * maxRaidDmg) + minRaidDmg);
+        this.getBoss().setDmgTaken(this.getBoss().getDmgTaken() + raidFinalDmg)
+        this.updateHealthBar(this.getBoss().getCurrentHealthInPercent());
+      },
+      error: err => console.error('Observer got an error: ' + err),
+      complete: () => console.log('Observer got a complete notification : heal done'),
+    };
+
+    this.raidDmgOnBossSubscription = timer.subscribe(observer);
+  }
+
+  getRaidDmgOnBossSubscription(){
+    return this.raidDmgOnBossSubscription;
+  }
+
+  stopRaidDmgOnBoss(){
+    this.getRaidDmgOnBossSubscription().unsubscribe();
   }
 
   initializeHealthBar() {
@@ -96,13 +110,11 @@ export class BossProviderService {
 
   doBossAttack(attack) {
     let timer = Rx.Observable.timer(0,attack.period);
-
     var observer = {
       next: () => this.attackDispatcher(attack),
       error: err => console.error('Observer got an error: ' + err),
       complete: () => console.log('Observer got a complete notification : heal done'),
     };
-
     return timer.subscribe(observer);
   }
 

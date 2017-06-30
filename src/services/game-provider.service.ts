@@ -42,9 +42,10 @@ export class GameProviderService extends Pause{
   }
 
   stopGame(){
-    this.playerProviderService.stopPlayerManaRegen(); // observable.timer
-    //FAIL this.raidDmgService.stopChangeHeroHealthOnTime(); // source.subscribe(observer)
-    this.bossProviderService.stopBossPaternSubscription(); // source.subscribe(observer)
+    this.playerProviderService.stopPlayerManaRegen(); 
+    //FAIL this.raidDmgService.stopChangeHeroHealthOnTime(); 
+    this.bossProviderService.stopBossPaternSubscription();
+    this.bossProviderService.stopRaidDmgOnBoss();
   }
 
   initializeHealthBar() {

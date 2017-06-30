@@ -87,7 +87,6 @@ export class RaidDmgService {
     };
 
     this.changeHeroHealthOnTimeSubscription = source.subscribe(observer);
-    //this.changeHeroHealthOnTimeSubscription.unsubscribe();
   }
 
   stopChangeHeroHealthOnTime(){
