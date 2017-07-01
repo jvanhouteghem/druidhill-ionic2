@@ -11,20 +11,8 @@ export class BossBarsComponent /*implements OnInit*/ {
     private bossProviderService:BossProviderService
   ) { }
 
-  /*ngOnInit() {
-    this.bossProviderService.startRaidDmgOnBoss();
-  }*/
-
-  /*_getBossCurrentHealth(){
-    return this.bossProviderService.getBoss().getCurrentHealth();
-  }
-
-  _getBossBaseHealth(){
-    return this.bossProviderService.getBoss().getBaseHealth();
-  }*/
-
   _getBossFormatHealth(){
-    return this.bossProviderService.getBoss() ? this.bossProviderService.getBoss().getCurrentHealth() + "/" + this.bossProviderService.getBoss().getCurrentHealth() : "";
+    return this.bossProviderService.getBoss() ? this.bossProviderService.getBoss().getCurrentHealth() + "/" + this.bossProviderService.getBoss().getBaseHealth() : "";
   }
 
 }

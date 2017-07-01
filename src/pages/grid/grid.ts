@@ -34,7 +34,7 @@ export class GridPage {
   }
 
   ngOnInit() {
-    //this.gameProviderService.startGame();
+    //this._startGame();
   }
 
   _startGame() {
@@ -61,6 +61,10 @@ export class GridPage {
 
   _resumeGame(){
     this.gameProviderService.resumeGame();
+  }
+
+  _getGameStatus(){
+    return this.gameProviderService.getGameStatus();
   }
 
   /*

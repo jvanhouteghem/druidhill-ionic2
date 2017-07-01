@@ -26,11 +26,27 @@ export class GameProviderService extends Pause{
 
   private game;
 
+  private gameStatus;
+  public static readonly GAME_STATUS_START = 0;
+  public static readonly GAME_STATUS_PAUSE = 1;
+  public static readonly GAME_STATUS_STOP = 2;
+  public static readonly GAME_STATUS_RESUME = 3;
+
+  getGameStatus(){
+    return this.gameStatus;
+  }
+
+  setGameStatus(gameStatus){
+    this.gameStatus = gameStatus;
+  }
+
   getGame(){
     return this.game;
   }
 
   startGame() {
+
+    this.setGameStatus(GameProviderService.GAME_STATUS_START);
 
     // Arrête les parties en cour
     //this.stopGame();
@@ -49,6 +65,9 @@ export class GameProviderService extends Pause{
   }
 
   stopGame(){
+
+    this.setGameStatus(GameProviderService.GAME_STATUS_PAUSE);
+
     this.playerProviderService.stopPlayerManaRegen(); 
     this.raidDmgService.stopChangeHeroHealthOnTime();
     this.bossProviderService.stopBossPaternSubscription();
@@ -66,6 +85,9 @@ export class GameProviderService extends Pause{
   }
 
   resumeGame(){
+
+    this.setGameStatus(GameProviderService.GAME_STATUS_RESUME);
+
     this.playerProviderService.setPlayer(this.game.player);
     //this.playerProviderService.getPlayer().updateMana(-7000);
     this.initializeHealthBar();
