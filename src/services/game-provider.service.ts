@@ -64,6 +64,10 @@ export class GameProviderService extends Pause{
     
   }
 
+  isPlaying(){
+    return this.gameStatus === GameProviderService.GAME_STATUS_START || this.gameStatus === GameProviderService.GAME_STATUS_RESUME;
+  }
+
   stopGame(){
 
     this.setGameStatus(GameProviderService.GAME_STATUS_PAUSE);

@@ -51,19 +51,23 @@ export class GridPage {
   }
 
   getCSSGradient(heroId: number) {
+    let result = "";
     let hero = this.raidProviderService.getRaid()[heroId];
-    return "linear-gradient(0deg, " + hero.getClassColor() + " " + this._getHeroHealthInPercent(hero.getId()) + "%, #4a4a4a 0%)"; // Warning, don't add ";" in string // life / background
+    if (hero != undefined) {
+      result = "linear-gradient(0deg, " + hero.getClassColor() + " " + this._getHeroHealthInPercent(hero.getId()) + "%, #4a4a4a 0%)"; // Warning, don't add ";" in string // life / background      
+    }
+    return result;
   }
 
-  _getGame(){
+  _getGame() {
     return this.gameProviderService.getGame();
   }
 
-  _resumeGame(){
+  _resumeGame() {
     this.gameProviderService.resumeGame();
   }
 
-  _getGameStatus(){
+  _getGameStatus() {
     return this.gameProviderService.getGameStatus();
   }
 

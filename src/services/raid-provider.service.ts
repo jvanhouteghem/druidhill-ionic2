@@ -25,6 +25,9 @@ private raid:Hero[];
 
   // Incremental for each hero
   generateHeroId(){
+    if(this.countHero >= 19){
+      this.countHero = -1;
+    }
     this.countHero++;
     return this.countHero;
   }
