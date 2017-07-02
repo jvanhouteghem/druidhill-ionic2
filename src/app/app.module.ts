@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { GridPage } from '../pages/grid/grid';
+import { ResumeGamePage } from '../pages/resumegame/resumegame';
 
 import {RaidProviderService} from './../services/raid-provider.service';
 import {RaidDmgService} from './../services/raid-dmg.service';
@@ -28,6 +29,7 @@ import { SpellIconsComponent } from '../components/spell-icons/spell-icons.compo
     HomePage,
     ListPage,
     GridPage,
+    ResumeGamePage,
     BossBarsComponent,
     PlayerBarsComponent
     ,SpellIconsComponent
@@ -41,7 +43,8 @@ import { SpellIconsComponent } from '../components/spell-icons/spell-icons.compo
     AppComponent,
     HomePage,
     ListPage,
-    GridPage
+    GridPage,
+    ResumeGamePage
   ],
   providers: [
     StatusBar,

@@ -27,8 +27,8 @@ export class GameProviderService{
   private gameStatus;
   public static readonly GAME_STATUS_START = 0;
   public static readonly GAME_STATUS_PAUSE = 1;
-  public static readonly GAME_STATUS_STOP = 2;
-  public static readonly GAME_STATUS_RESUME = 3;
+  public static readonly GAME_STATUS_RESUME = 2;
+  public static readonly GAME_STATUS_STOP = 3; // win or loose
 
   getGameStatus(){
     return this.gameStatus;

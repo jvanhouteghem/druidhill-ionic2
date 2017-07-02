@@ -10,6 +10,8 @@ import { Hero } from './../../models/characters/hero';
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import * as moment from 'moment/moment';
 import * as Rx from "rxjs/Rx";
+import { ModalController } from 'ionic-angular';
+import { ResumeGamePage } from '../resumegame/resumegame';
 
 @Component({
   selector: 'page-grid',
@@ -28,9 +30,15 @@ export class GridPage {
     private bossProviderService: BossProviderService,
     private playerProviderService: PlayerProviderService,
     private spellProviderService: SpellProviderService,
-    private gameProviderService: GameProviderService
+    private gameProviderService: GameProviderService,
+    public modalCtrl: ModalController
   ) {
     'ngInject';
+  }
+
+  openModal() {
+    let myModal = this.modalCtrl.create(ResumeGamePage);
+    myModal.present();
   }
 
   ngOnInit() {
