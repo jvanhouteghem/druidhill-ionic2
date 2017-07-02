@@ -11,10 +11,10 @@
   </div>
   <!-- progress bar -->
   <div>
-    <div [hidden]="_isLoadingSpell()==false" id="progressBarContainer">
+    <div [hidden]="!_isLoadingSpell()" id="progressBarContainer">
       <div id="progressBar"></div>
     </div>
-    <div [hidden]="!_isLoadingSpell()==false" id="progressBarContainer">
+    <div [hidden]="_isLoadingSpell()" id="progressBarContainer">
       &#8203;
     </div>
   </div>

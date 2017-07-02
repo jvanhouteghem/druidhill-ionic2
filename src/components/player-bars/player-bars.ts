@@ -26,12 +26,10 @@ export class PlayerBarsComponent implements OnInit {
   }
 
   getPlayerFormatHealth(){
-    // {{getPlayer().getCurrentHealth()}}/{{getPlayer().getBaseHealth()}}
     return this.getPlayer() ? this.getPlayer().getCurrentHealth() + "/" + this.getPlayer().getBaseHealth() : "";
   }
 
   getPlayerFormatMana(){
-    //{{getPlayer().getCurrentMana()}}/{{getPlayer().getBaseMana()}}
     return this.getPlayer() ? this.getPlayer().getCurrentMana() + "/" + this.getPlayer().getBaseMana() : "";
   }
 

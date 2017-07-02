@@ -13,6 +13,7 @@ export class SpellProviderService {
     private raidProviderService: RaidProviderService,
     private configProviderService: ConfigProviderService
   ) {
+    this.isLoadingSpell = false;
   }
 
   // id : unique, match with .img
