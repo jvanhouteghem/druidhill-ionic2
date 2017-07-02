@@ -1,9 +1,35 @@
+<!--
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle (click)="_stopGame()">
+    <button ion-button menuToggle (click)="openModal()">
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+-->
+
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="openResumeGameModal()">
+        <ion-icon name="pause"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="book"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="settings"></ion-icon> <!-- help-circle construct menu pause stats refresh -->
+      </button>
+    </ion-buttons>
+
+    <ion-title>DruidHill</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -44,12 +70,10 @@
 
   <spell-icons></spell-icons>
 
-  <button ion-button block (click)="openModal()">Open Modal</button>
-
-  <!--{{_getGameStatus()}}-->
-
+<!--
   <button (click)="_startGame()">Start</button>   
   <button (click)="_stopGame()">Stop</button>
   <button (click)="_resumeGame()">Resume</button>
+-->
 
 </ion-content>

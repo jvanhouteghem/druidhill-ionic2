@@ -5,6 +5,12 @@
 <ion-content padding>
   <h3>Win/Loose</h3>
 
-  <button ion-button block (click)="closeModal()">Close Modal</button>
+  <p>
+    ASTUCE : Faites très attention au <a>Séisme</a> de Machin. En cas de coup dur utilisez <a>Tranquilité.</a>
+  </p>
+
+  <button ion-button block (click)="closeModal()">Resume</button>
+  <button ion-button block (click)="_startGame()">Restart</button>
+  <button ion-button block (click)="_stopGame()">Quit</button>
 
 </ion-content>

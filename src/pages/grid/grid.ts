@@ -36,13 +36,16 @@ export class GridPage {
     'ngInject';
   }
 
-  openModal() {
+  openResumeGameModal() {
+
+    this.gameProviderService.stopGame();
+
     let myModal = this.modalCtrl.create(ResumeGamePage);
     myModal.present();
   }
 
   ngOnInit() {
-    //this._startGame();
+    this._startGame();
   }
 
   _startGame() {
