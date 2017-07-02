@@ -2,12 +2,18 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment/moment';
 import { Hero } from '../models/characters/hero';
 import { RaidProviderService } from './raid-provider.service';
+import { ConfigProviderService } from './config-provider.service';
 
 @Injectable()
 export class SpellProviderService {
+  
+  private isLoadingSpell: boolean;
 
-
-  private globalCooldown: number = 1000;
+  constructor(
+    private raidProviderService: RaidProviderService,
+    private configProviderService: ConfigProviderService
+  ) {
+  }
 
   // id : unique, match with .img
   // name
@@ -98,12 +104,6 @@ export class SpellProviderService {
     }
   ];
 
-  private isLoadingSpell: boolean;
-
-  constructor(private raidProviderService: RaidProviderService) {
-    this.isLoadingSpell = false;
-  }
-
   setIsLoadingSpell(value) {
     this.isLoadingSpell = value;
   }
@@ -150,7 +150,7 @@ export class SpellProviderService {
   isHealOnCooldown(spellId: string, inputMoment) {
     if (this.raidProviderService.getRaid()) {
       let lastTimeSpellUsed = this.getLastTimeSpellUsed();
-      let isGlobalCooldown = !inputMoment.clone().subtract(this.globalCooldown, 'millisecond').isAfter(lastTimeSpellUsed);
+      let isGlobalCooldown = !inputMoment.clone().subtract(this.configProviderService.getConfig().globalCooldown, 'millisecond').isAfter(lastTimeSpellUsed);
 
       let lastTimeInputHealUsed = this.getLastTimeSpellUsed(spellId);
       let isHealOnCooldown = !inputMoment.clone().subtract(this.getHealById(spellId).cooldown, 'millisecond').isAfter(lastTimeInputHealUsed);

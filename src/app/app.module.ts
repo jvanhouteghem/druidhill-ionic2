@@ -10,6 +10,7 @@ import { GridPage } from '../pages/grid/grid';
 import {RaidProviderService} from './../services/raid-provider.service';
 import {RaidDmgService} from './../services/raid-dmg.service';
 import {BossProviderService} from './../services/boss-provider.service';
+import {ConfigProviderService} from './../services/config-provider.service';
 import {PlayerProviderService} from './../services/player-provider.service';
 import {SpellProviderService} from './../services/spell-provider.service';
 import {GameProviderService} from './../services/game-provider.service';
@@ -48,6 +49,7 @@ import { SpellIconsComponent } from '../components/spell-icons/spell-icons.compo
     RaidProviderService,
     RaidDmgService,
     BossProviderService,
+    ConfigProviderService,
     PlayerProviderService,
     SpellProviderService, 
     GameProviderService,

@@ -3,6 +3,7 @@ import { Boss } from '../models/characters/boss';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from "rxjs";
 import { RaidProviderService } from './raid-provider.service';
+import { ConfigProviderService } from './config-provider.service';
 import { RaidDmgService } from './raid-dmg.service';
 import { Hero } from '../models/characters/hero';
 import * as Rx from "rxjs/Rx";
@@ -16,7 +17,8 @@ export class BossProviderService {
 
   constructor(
     private raidProviderService: RaidProviderService,
-    private raidDmgService: RaidDmgService
+    private raidDmgService: RaidDmgService,
+    private configProviderService: ConfigProviderService
   ) {
   }
 
