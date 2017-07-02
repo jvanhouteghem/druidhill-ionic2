@@ -7,6 +7,8 @@ import { ConfigProviderService } from './config-provider.service';
 import { RaidDmgService } from './raid-dmg.service';
 import { Hero } from '../models/characters/hero';
 import * as Rx from "rxjs/Rx";
+import { ModalController } from 'ionic-angular';
+import { ResumeGamePage } from '../pages/resumegame/resumegame';
 
 @Injectable()
 export class BossProviderService {
@@ -18,11 +20,12 @@ export class BossProviderService {
   constructor(
     private raidProviderService: RaidProviderService,
     private raidDmgService: RaidDmgService,
-    private configProviderService: ConfigProviderService
+    private configProviderService: ConfigProviderService,
+    public modalCtrl: ModalController
   ) {
   }
 
-  setBoss(boss:Boss){
+  setBoss(boss: Boss) {
     this.boss = boss;
   }
 
@@ -49,11 +52,11 @@ export class BossProviderService {
     this.raidDmgOnBossSubscription = timer.subscribe(observer);
   }
 
-  getRaidDmgOnBossSubscription(){
+  getRaidDmgOnBossSubscription() {
     return this.raidDmgOnBossSubscription;
   }
 
-  stopRaidDmgOnBoss(){
+  stopRaidDmgOnBoss() {
     this.getRaidDmgOnBossSubscription().unsubscribe();
   }
 
@@ -84,34 +87,42 @@ export class BossProviderService {
     return target;
   }
 
-  attackDispatcher(attack){
+  attackDispatcher(attack) {
     switch (attack.type[0]) {
       case "N":
         this.normalAttack(attack);
         break;
+    }
+    //isWipe ?
+    if (this.raidProviderService.isWipe()) {
+      // stop boss attak pattern
+      this.stopBossPaternSubscription();
+
+      // show modal
+      let myModal = this.modalCtrl.create(ResumeGamePage);
+      myModal.present();
     }
   }
 
   normalAttack(attack) {
     let target = this.getTarget(attack.target[0]);
     if (target != null) {
-      if (attack.target[0] == "T" && attack.addFocus){
+      if (attack.target[0] == "T" && attack.addFocus) {
         this.getBoss().setFocus(target);
       }
       this.raidDmgService.changeHeroHealth(target, attack.damages);
     }
   }
 
-  startBossPattern(){
+  startBossPattern() {
     let attacks = this.boss.getAttacks(this.boss.getDifficulty());
-    for (let i = 0 ; i < attacks.length ; i++){
+    for (let i = 0; i < attacks.length; i++) {
       this.bossPaternSubscriptions.push(this.doBossAttack(attacks[i]));
     }
-    //this.doBossAttack(attacks[0]);
   }
 
   doBossAttack(attack) {
-    let timer = Rx.Observable.timer(0,attack.period);
+    let timer = Rx.Observable.timer(0, attack.period);
     var observer = {
       next: () => this.attackDispatcher(attack),
       error: err => console.error('Observer got an error: ' + err),
@@ -120,12 +131,12 @@ export class BossProviderService {
     return timer.subscribe(observer);
   }
 
-  getBossPaternSubscriptions(){
+  getBossPaternSubscriptions() {
     return this.bossPaternSubscriptions;
   }
 
-  stopBossPaternSubscription(){
-    for (let i = 0 ; this.getBossPaternSubscriptions() && i < this.getBossPaternSubscriptions().length ; i++){
+  stopBossPaternSubscription() {
+    for (let i = 0; this.getBossPaternSubscriptions() && i < this.getBossPaternSubscriptions().length; i++) {
       this.getBossPaternSubscriptions()[i].unsubscribe();
     }
   }

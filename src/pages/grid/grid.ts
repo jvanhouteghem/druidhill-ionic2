@@ -79,19 +79,6 @@ export class GridPage {
     return this.gameProviderService.getGameStatus();
   }
 
-  /*
-  getCSSGradient(heroId: number) {
-    let hero = this.raidProviderService.getRaid()[heroId];
-    if (hero){
-      return "linear-gradient(0deg, " + hero.getClassColor() + " " + this._getHeroHealthInPercent(hero.getId()) + "%, #4a4a4a 0%)"; // Warning, don't add ";" in string // life / background
-    } else {
-      console.log("getCSSGradient - hero : ", hero);
-      return null;
-    }
-    
-  }
-  */
-
   _changeHeroHealth(hero: Hero, inputNb: number) {
     this.raidDmgService.changeHeroHealth(hero, inputNb);
   }
