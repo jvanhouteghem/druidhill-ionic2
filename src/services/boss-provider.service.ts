@@ -44,6 +44,14 @@ export class BossProviderService {
         let raidFinalDmg = Math.floor((Math.random() * maxRaidDmg) + minRaidDmg);
         this.getBoss().setDmgTaken(this.getBoss().getDmgTaken() + raidFinalDmg)
         this.updateHealthBar(this.getBoss().getCurrentHealthInPercent());
+        
+        //isDead?
+        if(this.getBoss().isDead()){
+          this.stopRaidDmgOnBoss();
+
+          let myModal = this.modalCtrl.create(ResumeGamePage);
+          myModal.present();
+        }
       },
       error: err => console.error('Observer got an error: ' + err),
       complete: () => console.log('Observer got a complete notification : heal done'),
@@ -95,10 +103,8 @@ export class BossProviderService {
     }
     //isWipe ?
     if (this.raidProviderService.isWipe()) {
-      // stop boss attak pattern
       this.stopBossPaternSubscription();
 
-      // show modal
       let myModal = this.modalCtrl.create(ResumeGamePage);
       myModal.present();
     }

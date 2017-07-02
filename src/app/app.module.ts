@@ -31,8 +31,8 @@ import { SpellIconsComponent } from '../components/spell-icons/spell-icons.compo
     GridPage,
     ResumeGamePage,
     BossBarsComponent,
-    PlayerBarsComponent
-    ,SpellIconsComponent
+    PlayerBarsComponent,
+    SpellIconsComponent
   ],
   imports: [
     BrowserModule,
