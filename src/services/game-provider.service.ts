@@ -9,6 +9,7 @@ import { Subject } from 'rxjs/Subject';
 import * as moment from 'moment/moment';
 import { Boss } from '../models/characters/boss';
 import {Player} from './../models/characters/player';
+import { GameState } from '../models/game-state.enum';
 
 @Injectable()
 export class GameProviderService{
@@ -23,19 +24,14 @@ export class GameProviderService{
   }
 
   private game;
-
-  private gameStatus;
-  public static readonly GAME_STATUS_START = 0;
-  public static readonly GAME_STATUS_PAUSE = 1;
-  public static readonly GAME_STATUS_RESUME = 2;
-  public static readonly GAME_STATUS_STOP = 3; // win or loose
+  private gameState;
 
   getGameStatus(){
-    return this.gameStatus;
+    return this.gameState;
   }
 
   setGameStatus(gameStatus){
-    this.gameStatus = gameStatus;
+    this.gameState = gameStatus;
   }
 
   getGame(){
@@ -43,7 +39,7 @@ export class GameProviderService{
   }
 
   startGame() {
-    this.setGameStatus(GameProviderService.GAME_STATUS_START);
+    this.setGameStatus(GameState.GAME_STATUS_START);
 
     // Démarre une nouvelle partie
     this.playerProviderService.setPlayer(new Player("Lea", 20000, 15500));
@@ -58,12 +54,12 @@ export class GameProviderService{
   }
 
   isPlaying(){
-    return this.gameStatus === GameProviderService.GAME_STATUS_START || this.gameStatus === GameProviderService.GAME_STATUS_RESUME;
+    return this.gameState === GameState.GAME_STATUS_START || this.gameState === GameState.GAME_STATUS_RESUME;
   }
 
   stopGame(){
 
-    this.setGameStatus(GameProviderService.GAME_STATUS_PAUSE);
+    this.setGameStatus(GameState.GAME_STATUS_PAUSE);
 
     this.playerProviderService.stopPlayerManaRegen(); 
     this.raidDmgService.stopChangeHeroHealthOnTime();
@@ -83,7 +79,7 @@ export class GameProviderService{
 
   resumeGame(){
 
-    this.setGameStatus(GameProviderService.GAME_STATUS_RESUME);
+    this.setGameStatus(GameState.GAME_STATUS_RESUME);
 
     this.playerProviderService.setPlayer(this.game.player);
     //this.playerProviderService.getPlayer().updateMana(-7000);
