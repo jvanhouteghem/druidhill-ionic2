@@ -23,4 +23,8 @@ export class ResumeGamePage {
     this.viewCtrl.dismiss(GameState.GAME_STATUS_START);
   }
 
+  closeModalAndQuit(){
+    this.viewCtrl.dismiss(GameState.GAME_STATUS_STOP);
+  }
+
 }

@@ -13,6 +13,7 @@ import * as Rx from "rxjs/Rx";
 import { ModalController } from 'ionic-angular';
 import { ResumeGamePage } from '../resumegame/resumegame';
 import { GameState } from '../../models/game-state.enum';
+import { AppComponent } from './../../app/app.component';
 
 @Component({
   selector: 'page-grid',
@@ -45,12 +46,16 @@ export class GridPage {
 
     myModal.onDidDismiss( data => {
       switch(data) { 
-        case GameState.GAME_STATUS_RESUME: { 
+        case GameState.GAME_STATUS_RESUME: {
             this._resumeGame();
             break; 
         }
-        case GameState.GAME_STATUS_START: { 
+        case GameState.GAME_STATUS_START: {
             this._startGame();
+            break; 
+        }
+        case GameState.GAME_STATUS_STOP: {
+            this.navCtrl.push(AppComponent);
             break; 
         }
       }
