@@ -6,17 +6,12 @@ import { NavController, NavParams, ViewController } from 'ionic-angular';
   templateUrl: 'tutorial.html'
 })
 export class TutorialPage {
-  /*selectedItem: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;*/
 
-  constructor(public navCtrl: NavController, 
-  public navParams: NavParams,
-  public viewCtrl: ViewController
-  ) {
-  }
-
-// ============ Tutorial ===========
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public viewCtrl: ViewController
+  ) {}
 
   closeModal() {
     this.viewCtrl.dismiss();
@@ -42,8 +37,6 @@ export class TutorialPage {
       description: "Chacun de vos sort est affecté à une commande ...",
       image: "assets/images/heartplayer11.svg",
     }
-
-    //assets/images/ica-slidebox-img-1.png
   ];
 
 }

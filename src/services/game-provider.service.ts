@@ -48,7 +48,7 @@ export class GameProviderService{
     //this.setManaBar(100);
     this.playerProviderService.startPlayerManaRegen();
     this.raidProviderService.generateRaid();
-    this.bossProviderService.setBoss(new Boss('THEBOSS', 20000, 'hard'));
+    this.bossProviderService.setBoss(new Boss('THEBOSS', 50000, 'hard'));
     this.bossProviderService.startBossPattern();
     this.bossProviderService.startRaidDmgOnBoss();
   }
