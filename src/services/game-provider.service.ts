@@ -42,13 +42,13 @@ export class GameProviderService{
     this.setGameStatus(GameState.GAME_STATUS_START);
 
     // Démarre une nouvelle partie
-    this.playerProviderService.setPlayer(new Player("Lea", 20000, 15500));
+    this.playerProviderService.setPlayer(new Player('Lea', 20000, 15500));
     this.playerProviderService.getPlayer().updateMana(-7000);
-    this.setHealthBar(100);
-    this.setManaBar(100);
+    //this.setHealthBar(100);
+    //this.setManaBar(100);
     this.playerProviderService.startPlayerManaRegen();
     this.raidProviderService.generateRaid();
-    this.bossProviderService.setBoss(new Boss("THEBOSS", 20000, "hard"));
+    this.bossProviderService.setBoss(new Boss('THEBOSS', 20000, 'hard'));
     this.bossProviderService.startBossPattern();
     this.bossProviderService.startRaidDmgOnBoss();
   }
@@ -91,15 +91,16 @@ export class GameProviderService{
   }
 
   // Todo move
-  setHealthBar(health:number) {
-    var elem = document.getElementById("healthBar");
+  /*setHealthBar(health:number) {
+    console.log('sethealthbar');
+    var elem = document.getElementById('healthBar');
     elem.style.width = health+'%';
   }
 
   // Todo move
   setManaBar(mana:number) {
-    var elem = document.getElementById("manaBar");
+    var elem = document.getElementById('manaBar');
     elem.style.width = mana+'%';
-  }
+  }*/
 
 }

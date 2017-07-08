@@ -10,7 +10,7 @@
 -->
 
 <ion-header>
-  <ion-navbar>
+  <ion-navbar hideBackButton="true">
     <ion-buttons start>
       <button ion-button icon-only (click)="openResumeGameModal()">
         <ion-icon name="pause"></ion-icon>
@@ -34,6 +34,31 @@
 </ion-header>
 
 <ion-content padding>
+
+  <ion-slides pager [hidden]="!getSkip()">
+    <ion-slide *ngFor="let slide of slides">
+      <ion-toolbar>
+        <ion-buttons end>
+          <button ion-button color="primary" (click)="toggleSkip()">Skip</button>
+        </ion-buttons>
+      </ion-toolbar>
+      <img [src]="slide.image" class="slide-image"/>
+      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+      <p [innerHTML]="slide.description"></p>
+    </ion-slide>
+    <ion-slide>
+      <ion-toolbar>
+      </ion-toolbar>
+      <img src="assets/images/ica-slidebox-img-4.png" class="slide-image"/>
+      <h2 class="slide-title">Ready to Play?</h2>
+      <button ion-button large clear icon-end color="primary">
+        Continue
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-slide>
+  </ion-slides>
+
+  <div [hidden]="getSkip()">
 
   <player-bars></player-bars>
   
@@ -76,5 +101,7 @@
   <button (click)="_stopGame()">Stop</button>
   <button (click)="_resumeGame()">Resume</button>
 -->
+
+  </div>
 
 </ion-content>

@@ -1,16 +1,23 @@
-<div id="BossBars">
-  <!-- health bar -->
-  <div id="progressBarContainer">
-    <div id="bossHealthTextBar">{{_getBossFormatHealth()}}</div>
-    <div id="bossHealthBar"></div>
+<div id="BossBars centerpanel">
+  <!-- left -->
+  <div class="leftpanel">
+    <img src="assets/images/boss10.svg" class="boss"/>
   </div>
-  <!-- progress bar -->
-  <div>
-    <div [hidden]="false==false" id="progressBarContainer">
-      <div id="progressBar"></div>
+  <!-- right -->
+  <div class="rightpanel">
+    <!-- health bar -->
+    <div id="progressBarContainer">
+      <div id="bossHealthTextBar">{{_getBossFormatHealth()}}</div>
+      <div id="bossHealthBar"></div>
     </div>
-    <div [hidden]="true==false" id="progressBarContainer">
-      &#8203;
+    <!-- progress bar -->
+    <div>
+      <div [hidden]="false==false" id="progressBarContainer">
+        <div id="progressBar"></div>
+      </div>
+      <div [hidden]="true==false" id="progressBarContainer">
+        &#8203;
+      </div>
     </div>
   </div>
 </div>
