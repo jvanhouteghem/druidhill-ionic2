@@ -12,8 +12,10 @@ import * as moment from 'moment/moment';
 import * as Rx from "rxjs/Rx";
 import { ModalController } from 'ionic-angular';
 import { ResumeGamePage } from '../resumegame/resumegame';
+import { TutorialPage } from '../tutorial/tutorial';
 import { GameState } from '../../models/game-state.enum';
 import { AppComponent } from './../../app/app.component';
+import { AlertController } from 'ionic-angular';
 
 @Component({
   selector: 'page-grid',
@@ -33,15 +35,18 @@ export class GridPage {
     private playerProviderService: PlayerProviderService,
     private spellProviderService: SpellProviderService,
     private gameProviderService: GameProviderService,
-    public modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private alertCtrl: AlertController
   ) {
     'ngInject';
   }
 
+  ngOnInit() {
+     this.askShowTutorial();
+  }
+
   openResumeGameModal() {
-
     this.gameProviderService.stopGame();
-
     let myModal = this.modalCtrl.create(ResumeGamePage);
 
     myModal.onDidDismiss( data => {
@@ -64,13 +69,40 @@ export class GridPage {
     myModal.present();
   }
 
-  ngOnInit() {
-    this._startGame();
-    this.skip = true;
+  openTutorialModal() {
+    let myModal = this.modalCtrl.create(TutorialPage);
+
+    myModal.onDidDismiss( () => {
+      this._startGame();
+    });
+
+    myModal.present();
+  }
+
+  askShowTutorial() {
+    let confirm = this.alertCtrl.create({
+      title: 'C\'est votre première fois?',
+      message: 'Voulez vous consulter le tutoriel ?',
+      buttons: [
+        {
+          text: 'Consulter le tutoriel',
+          handler: () => {
+            this.openTutorialModal();
+          }
+        },
+        {
+          text: 'Jouer directement',
+          handler: () => {
+            console.log('Agree clicked');
+            this._startGame();
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   _startGame() {
-    console.log("startgame");
     this.gameProviderService.startGame();
   }
 
@@ -143,40 +175,6 @@ export class GridPage {
   getPlayer() {
     return this.playerProviderService.getPlayer();
   }
-
-  private skip:boolean;
-
-  getSkip(){
-    return this.skip;
-  }
-
-  toggleSkip(){
-    this.skip = !this.skip;
-  }
-
-  slides = [
-    {
-      title: "Bienvenue sur le tutoriel!",
-      description: "DruidHill (DH) est un jeu d'action refléxion dans lequel vous aller devoir garder en vie un groupe d'aventurier pendant leur combats contre des boss redoutables.",
-      image: "assets/images/book.svg",
-    },
-    {
-      title: "But du jeu ?",
-      description: "Vous allez affronter de nombreux boss ayant chacun un panel de techniques aussi variées que dangereuse. Pour gagner vous devez garder suffisament longtemps votre raid en vie pour qu'il puisse tuer le boss.",
-      image: "assets/images/boss10.svg",
-    },
-    {
-      title: "Déroulement d'une partie ?",
-      description: "Au cours de la partie vous allez devoir utiliser de nombreux sort de soin. Ces sorts coûtent du <strong>mana</strong> et ont chacun <strong>un temps de recharge</strong>.",
-      image: "assets/images/heartplayer11.svg",
-    },{
-      title: "Comment jouer ?",
-      description: "Chacun de vos sort est affecté à une commande ...",
-      image: "assets/images/heartplayer11.svg",
-    }
-
-    //assets/images/ica-slidebox-img-1.png
-  ];
 
 
 }

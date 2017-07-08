@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { GameState } from '../../models/game-state.enum';
+import { ModalController } from 'ionic-angular';
+import { TutorialPage } from '../tutorial/tutorial';
 
 @Component({
   selector: 'page-resumegame',
@@ -10,7 +12,9 @@ import { GameState } from '../../models/game-state.enum';
 export class ResumeGamePage {
 
   constructor(
-    public navCtrl: NavController, public viewCtrl: ViewController
+    public navCtrl: NavController, 
+    public viewCtrl: ViewController,
+    private modalCtrl: ModalController,
   ) {
 
   }
@@ -25,6 +29,14 @@ export class ResumeGamePage {
 
   closeModalAndQuit(){
     this.viewCtrl.dismiss(GameState.GAME_STATUS_STOP);
+  }
+
+  closeModalAndOpenTutorial() {
+    let myModal = this.modalCtrl.create(TutorialPage);
+    myModal.onDidDismiss( () => {
+      this.viewCtrl.dismiss(GameState.GAME_STATUS_START)
+    });
+    myModal.present();
   }
 
 }

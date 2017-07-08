@@ -5,6 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AppComponent } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { TutorialPage } from '../pages/tutorial/tutorial';
 import { GridPage } from '../pages/grid/grid';
 import { ResumeGamePage } from '../pages/resumegame/resumegame';
 
@@ -28,6 +29,7 @@ import { SpellIconsComponent } from '../components/spell-icons/spell-icons.compo
     AppComponent,
     HomePage,
     ListPage,
+    TutorialPage,
     GridPage,
     ResumeGamePage,
     BossBarsComponent,
@@ -43,6 +45,7 @@ import { SpellIconsComponent } from '../components/spell-icons/spell-icons.compo
     AppComponent,
     HomePage,
     ListPage,
+    TutorialPage,
     GridPage,
     ResumeGamePage
   ],
