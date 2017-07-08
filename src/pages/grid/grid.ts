@@ -81,17 +81,17 @@ export class GridPage {
 
   askShowTutorial() {
     let confirm = this.alertCtrl.create({
-      title: 'C\'est votre première fois?',
-      message: 'Voulez vous consulter le tutoriel ?',
+      title: 'Première partie ?',
+      message: 'Voir le tutoriel ?',
       buttons: [
         {
-          text: 'Consulter le tutoriel',
+          text: 'Oui',
           handler: () => {
             this.openTutorialModal();
           }
         },
         {
-          text: 'Jouer directement',
+          text: 'Non merci',
           handler: () => {
             console.log('Agree clicked');
             this._startGame();
