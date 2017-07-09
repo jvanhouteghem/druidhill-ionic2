@@ -7,7 +7,7 @@ export class GameMessagerService {
 
     private subject = new Subject<any>();
  
-    sendMessage(message: string) {
+    sendMessage(message: string | number) {
         this.subject.next({ text: message });
     }
  

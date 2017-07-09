@@ -7,10 +7,10 @@ import { ConfigProviderService } from './config-provider.service';
 import { RaidDmgService } from './raid-dmg.service';
 import { Hero } from '../models/characters/hero';
 import * as Rx from "rxjs/Rx";
-import { ModalController } from 'ionic-angular';
 import { ResumeGamePage } from '../pages/resumegame/resumegame';
 import { AlertController } from 'ionic-angular';
 import { GameMessagerService } from './../services/game-messager.service';
+import { GameState, GameResult } from './../models/game-state.enum';
 
 @Injectable()
 export class BossProviderService {
@@ -23,7 +23,6 @@ export class BossProviderService {
     private raidProviderService: RaidProviderService,
     private raidDmgService: RaidDmgService,
     private configProviderService: ConfigProviderService,
-    public modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private gameMessagerService: GameMessagerService
   ) {
@@ -52,9 +51,8 @@ export class BossProviderService {
         //isDead?
         if(this.getBoss().isDead()){
           this.stopRaidDmgOnBoss();
-
-          let myModal = this.modalCtrl.create(ResumeGamePage);
-          myModal.present();
+          this.stopBossPaternSubscription();
+          this.gameMessagerService.sendMessage(GameResult.GAME_RESULT_LOOSE);
         }
       },
       error: err => console.error('Observer got an error: ' + err),
@@ -107,36 +105,11 @@ export class BossProviderService {
     }
     //isWipe ?
     if (this.raidProviderService.isWipe()) {
-      this.gameMessagerService.sendMessage('LOOSE');
+      this.gameMessagerService.sendMessage(""+GameState.GAME_STATUS_LOOSE); // todo enum
       this.stopBossPaternSubscription();
-      
-      /*let myModal = this.modalCtrl.create(ResumeGamePage);
-      myModal.present();*/
     }
   }
 
-  /*endGameAlert() {
-    let confirm = this.alertCtrl.create({
-      title: 'Gagné / Perdu',
-      message: 'Bravo / Booh',
-      buttons: [
-        {
-          text: 'Rejouer',
-          handler: () => {
-            console.log("rejouer");
-          }
-        },
-        {
-          text: 'Menu',
-          handler: () => {
-            console.log('Agree clicked');
-            console.log("quitter");
-          }
-        }
-      ]
-    });
-    confirm.present();
-  }*/
 
   normalAttack(attack) {
     let target = this.getTarget(attack.target[0]);

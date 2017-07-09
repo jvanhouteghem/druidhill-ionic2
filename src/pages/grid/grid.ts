@@ -12,7 +12,7 @@ import * as Rx from "rxjs/Rx";
 import { ModalController } from 'ionic-angular';
 import { ResumeGamePage } from '../resumegame/resumegame';
 import { TutorialPage } from '../tutorial/tutorial';
-import { GameState } from '../../models/game-state.enum';
+import { GameState, GameResult } from '../../models/game-state.enum';
 import { AppComponent } from './../../app/app.component';
 import { AlertController } from 'ionic-angular';
 import { Boss } from '../../models/characters/boss';
@@ -49,8 +49,7 @@ export class GridPage {
   }
 
   gameEvents(message){
-    console.log(message);
-    this.winOrLooseAlert();
+    this.winOrLooseAlert(message.text);
   }
 
   ngOnInit() {
@@ -114,9 +113,12 @@ export class GridPage {
     confirm.present();
   }
 
-  winOrLooseAlert() {
+  winOrLooseAlert(message) {
+
+    let gameResult = message == GameResult.GAME_RESULT_WIN ? "Victory" : "Defeat";
+
     let confirm = this.alertCtrl.create({
-      title: 'Perdu !!',
+      title: message + ' !!',
       message: 'Rejouer ?',
       buttons: [
         {
