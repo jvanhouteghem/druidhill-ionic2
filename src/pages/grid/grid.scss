@@ -53,9 +53,9 @@ page-grid {
     #bossHealthTextBar {
         z-index: 100;
         position: absolute;
-        color: white;
-        left: 140px;
-        top: 417px;
+        color: white; //color: #4a5771;
+        left: 150px;
+        top: 427px;
     }
 
     /*----------------------------------------
@@ -110,16 +110,16 @@ page-grid {
         z-index: 100;
         position: absolute;
         color: white;
-        left: 140px;
-        top: 19px;
+        left: 90px;
+        top: 10px;
     }
 
     #manaTextBar {
         z-index: 100;
         position: absolute;
         color: white;
-        left: 140px;
-        top: 39px;
+        left: 90px;
+        top: 30px;
     }
 
 /*----------------------------------------

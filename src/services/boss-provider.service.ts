@@ -9,6 +9,7 @@ import { Hero } from '../models/characters/hero';
 import * as Rx from "rxjs/Rx";
 import { ModalController } from 'ionic-angular';
 import { ResumeGamePage } from '../pages/resumegame/resumegame';
+import { AlertController } from 'ionic-angular';
 
 @Injectable()
 export class BossProviderService {
@@ -21,7 +22,8 @@ export class BossProviderService {
     private raidProviderService: RaidProviderService,
     private raidDmgService: RaidDmgService,
     private configProviderService: ConfigProviderService,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    private alertCtrl: AlertController
   ) {
   }
 
@@ -104,11 +106,34 @@ export class BossProviderService {
     //isWipe ?
     if (this.raidProviderService.isWipe()) {
       this.stopBossPaternSubscription();
-
-      let myModal = this.modalCtrl.create(ResumeGamePage);
-      myModal.present();
+      
+      /*let myModal = this.modalCtrl.create(ResumeGamePage);
+      myModal.present();*/
     }
   }
+
+  /*endGameAlert() {
+    let confirm = this.alertCtrl.create({
+      title: 'Gagné / Perdu',
+      message: 'Bravo / Booh',
+      buttons: [
+        {
+          text: 'Rejouer',
+          handler: () => {
+            console.log("rejouer");
+          }
+        },
+        {
+          text: 'Menu',
+          handler: () => {
+            console.log('Agree clicked');
+            console.log("quitter");
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }*/
 
   normalAttack(attack) {
     let target = this.getTarget(attack.target[0]);

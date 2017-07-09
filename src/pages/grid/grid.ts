@@ -42,7 +42,7 @@ export class GridPage {
   }
 
   ngOnInit() {
-     this.askShowTutorial();
+     this.tutorialAlert();
   }
 
   openResumeGameModal() {
@@ -79,10 +79,10 @@ export class GridPage {
     myModal.present();
   }
 
-  askShowTutorial() {
+  tutorialAlert() {
     let confirm = this.alertCtrl.create({
       title: 'Première partie ?',
-      message: 'Voir le tutoriel ?',
+      message: 'Afficher le tutoriel ?',
       buttons: [
         {
           text: 'Oui',
