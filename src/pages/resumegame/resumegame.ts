@@ -11,12 +11,15 @@ import { TutorialPage } from '../tutorial/tutorial';
 })
 export class ResumeGamePage {
 
+  private displayInfos:boolean;
+
   constructor(
     public navCtrl: NavController, 
     public viewCtrl: ViewController,
     private modalCtrl: ModalController
   ) {
     //'ngInject';
+    this.displayInfos = true;
   }
 
   closeModalAndResume() {
@@ -37,6 +40,14 @@ export class ResumeGamePage {
       this.viewCtrl.dismiss(GameState.GAME_STATUS_START)
     });*/
     myModal.present();
+  }
+
+  toggleDisplayInfos(){
+    this.displayInfos = !this.displayInfos;
+  }
+
+  getDisplayInfos(){
+    return this.displayInfos;
   }
 
 }

@@ -88,8 +88,8 @@ export class Boss extends Character {
                 {
                     type: ["N"],
                     target: ["R"], // T tank, R Random, P Player, L Lower, H Higher
-                    damages: 100,
-                    period: 50,
+                    damages: 250,
+                    period: 250,
                     addFocus: false
                 }
             ]

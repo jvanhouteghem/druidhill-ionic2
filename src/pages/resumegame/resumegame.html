@@ -1,13 +1,59 @@
-<ion-header>
-
-</ion-header>
-
 <ion-content padding>
   <h3>Pause</h3>
+  
 
-  <p>
-    ASTUCE : Faites très attention au <a>Séisme</a> de Machin. En cas de coup dur utilisez <a>Tranquilité.</a>
-  </p>
+    <ion-list-header>
+    <ion-item>
+      <ion-note item-start><img src="assets/images/boss10.svg" height="25px"/></ion-note >
+      <ion-note style="color:black">
+        Graâl - Dieu des tourments
+      </ion-note>
+      <ion-note item-end>
+        Hard
+      </ion-note>
+    </ion-item>
+    </ion-list-header>
+
+  <button ion-button block (click)="toggleDisplayInfos()">Informations</button>
+
+  <ion-list no-border *ngIf="getDisplayInfos()">
+<!-- 
+      <div class="item row" style="text-align:left">
+        <span class="col"><img src="assets/images/boss10.svg" /></span>
+        <span class="col">Graâl - Dieu des tourments</span>
+      </div>
+  -->
+    <ion-item>
+      <ion-icon name='flask' item-start></ion-icon>
+      <ion-note  class="resumeattackinfo">
+        dmg:0.5k / target:tank / cd:0.5s
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='body' item-start></ion-icon>
+      <ion-note  class="resumeattackinfo">
+        dmg:1k / target:random / cd:1s
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='leaf' item-start></ion-icon>
+      <ion-note  class="resumeattackinfo">
+        dmg:10k / target:random / cd:5s
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='flask' item-start></ion-icon>
+      <ion-note  class="resumeattackinfo">
+        dmg:0.3k / target:random / cd:0.3s
+      </ion-note>
+    </ion-item>
+
+    <h4>Astuce :</h4>
+    <p>Faites très attention à l'attaque <a>slash</a> de Graâl. En cas de coup dur utilisez <a>Tranquilité.</a></p>
+  </ion-list>
 
   <button ion-button block (click)="closeModalAndResume()">Resume</button>
   <button ion-button block (click)="closeModalAndRestart()">Restart</button>

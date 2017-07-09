@@ -118,7 +118,7 @@ export class GridPage {
     let gameResult = message == GameResult.GAME_RESULT_WIN ? "Victory" : "Defeat";
 
     let confirm = this.alertCtrl.create({
-      title: message + ' !!',
+      title: gameResult + ' !!',
       message: 'Rejouer ?',
       buttons: [
         {
@@ -148,7 +148,7 @@ export class GridPage {
     //this.setManaBar(100);
     this.playerProviderService.startPlayerManaRegen();
     this.raidProviderService.generateRaid();
-    this.bossProviderService.setBoss(new Boss('THEBOSS', 50000, 'hard'));
+    this.bossProviderService.setBoss(new Boss('THEBOSS', 5000, 'hard'));
     this.bossProviderService.startBossPattern();
     this.bossProviderService.startRaidDmgOnBoss();
   }
