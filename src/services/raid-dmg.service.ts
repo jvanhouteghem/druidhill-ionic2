@@ -7,9 +7,7 @@ import { Subscription } from "rxjs";
 import { Boss } from '../models/characters/boss';
 import { Hero } from '../models/characters/hero';
 import { Player } from '../models/characters/player';
-
 import * as moment from 'moment/moment';
-import { GameProviderService } from './game-provider.service';
 import * as Rx from "rxjs/Rx";
 
 @Injectable()

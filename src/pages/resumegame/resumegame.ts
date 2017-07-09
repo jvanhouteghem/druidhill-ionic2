@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, forwardRef, Inject } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { GameState } from '../../models/game-state.enum';
@@ -14,9 +14,9 @@ export class ResumeGamePage {
   constructor(
     public navCtrl: NavController, 
     public viewCtrl: ViewController,
-    private modalCtrl: ModalController,
+    private modalCtrl: ModalController
   ) {
-
+    //'ngInject';
   }
 
   closeModalAndResume() {
@@ -33,9 +33,9 @@ export class ResumeGamePage {
 
   closeModalAndOpenTutorial() {
     let myModal = this.modalCtrl.create(TutorialPage);
-    myModal.onDidDismiss( () => {
+    /*myModal.onDidDismiss( () => {
       this.viewCtrl.dismiss(GameState.GAME_STATUS_START)
-    });
+    });*/
     myModal.present();
   }
 

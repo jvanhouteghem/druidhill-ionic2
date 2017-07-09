@@ -15,7 +15,6 @@ import {BossProviderService} from './../services/boss-provider.service';
 import {ConfigProviderService} from './../services/config-provider.service';
 import {PlayerProviderService} from './../services/player-provider.service';
 import {SpellProviderService} from './../services/spell-provider.service';
-import {GameProviderService} from './../services/game-provider.service';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -58,7 +57,6 @@ import { SpellIconsComponent } from '../components/spell-icons/spell-icons.compo
     ConfigProviderService,
     PlayerProviderService,
     SpellProviderService, 
-    GameProviderService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

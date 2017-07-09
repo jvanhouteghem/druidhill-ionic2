@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { RaidProviderService } from './../../services/raid-provider.service';
 import { RaidDmgService } from './../../services/raid-dmg.service';
 import { BossProviderService } from './../../services/boss-provider.service';
 import { PlayerProviderService } from './../../services/player-provider.service';
 import { SpellProviderService } from './../../services/spell-provider.service';
-import { GameProviderService } from './../../services/game-provider.service';
 import { Hero } from './../../models/characters/hero';
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import * as moment from 'moment/moment';
@@ -18,6 +17,7 @@ import { AppComponent } from './../../app/app.component';
 import { AlertController } from 'ionic-angular';
 import { Boss } from '../../models/characters/boss';
 import {Player} from '../../models/characters/player';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'page-grid',
@@ -27,6 +27,9 @@ export class GridPage {
 
   private pendingLeftClick = false; // used to wait if left click is single or double
   private leftClickCount = 0; // used to wait if left click is single or double
+    message: any;
+    subscription: Subscription;
+    private game;
 
   // Only for event and display
   constructor(
@@ -36,7 +39,6 @@ export class GridPage {
     private bossProviderService: BossProviderService,
     private playerProviderService: PlayerProviderService,
     private spellProviderService: SpellProviderService,
-    private gameProviderService: GameProviderService,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController
   ) {
@@ -54,7 +56,7 @@ export class GridPage {
     myModal.onDidDismiss( data => {
       switch(data) { 
         case GameState.GAME_STATUS_RESUME: {
-            this._resumeGame();
+            this.resumeGame();
             break; 
         }
         case GameState.GAME_STATUS_START: {
@@ -106,7 +108,6 @@ export class GridPage {
 
   startGame() {
     //this.setGameStatus(GameState.GAME_STATUS_START);
-
     // Démarre une nouvelle partie
     this.playerProviderService.setPlayer(new Player('Lea', 20000, 15500));
     this.playerProviderService.getPlayer().updateMana(-7000);
@@ -121,13 +122,23 @@ export class GridPage {
 
   stopGame(){
     //this.setGameStatus(GameState.GAME_STATUS_PAUSE);
-
     this.playerProviderService.stopPlayerManaRegen(); 
     this.raidDmgService.stopChangeHeroHealthOnTime();
     this.bossProviderService.stopBossPaternSubscription();
     this.bossProviderService.stopRaidDmgOnBoss();
 
-    this.gameProviderService.saveGame();
+    this.saveGame();
+  }
+
+  resumeGame(){
+    //this.setGameStatus(GameState.GAME_STATUS_RESUME);
+    this.playerProviderService.setPlayer(this.game.player);
+    //this.playerProviderService.getPlayer().updateMana(-7000);
+    this.playerProviderService.startPlayerManaRegen();
+    this.raidProviderService.setRaid(this.game.raid);
+    this.bossProviderService.setBoss(this.game.boss);
+    this.bossProviderService.startBossPattern();
+    this.bossProviderService.startRaidDmgOnBoss();
   }
 
   _getRaid() {
@@ -143,16 +154,16 @@ export class GridPage {
     return result;
   }
 
-  _getGame() {
-    return this.gameProviderService.getGame();
-  }
+  /*getGame() {
+    return this.game;
+  }*/
 
-  _resumeGame() {
-    this.gameProviderService.resumeGame();
-  }
-
-  _getGameStatus() {
-    return this.gameProviderService.getGameStatus();
+  saveGame(){
+    this.game = {
+      player: this.playerProviderService.getPlayer(),
+      raid: this.raidProviderService.getRaid(),
+      boss: this.bossProviderService.getBoss()
+    }
   }
 
   _changeHeroHealth(hero: Hero, inputNb: number) {
@@ -172,13 +183,11 @@ export class GridPage {
       setTimeout(function () {
         // double click
         if (that.leftClickCount >= 2) {
-          console.log("double click");
           let hero = that.raidProviderService.getRaid()[heroId];
           that.raidDmgService.healingTouch(hero);
         }
         // single click
         else {
-          console.log("single click");
           let hero = that.raidProviderService.getRaid()[heroId];
           that.raidDmgService.rejuvenation(hero);
         }

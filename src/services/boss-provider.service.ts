@@ -153,7 +153,7 @@ export class BossProviderService {
   }
 
   doBossAttack(attack) {
-    let timer = Rx.Observable.timer(3000, attack.period);
+    let timer = Rx.Observable.timer(500, attack.period);
     var observer = {
       next: () => this.attackDispatcher(attack),
       error: err => console.error('Observer got an error: ' + err),
