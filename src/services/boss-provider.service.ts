@@ -10,6 +10,7 @@ import * as Rx from "rxjs/Rx";
 import { ModalController } from 'ionic-angular';
 import { ResumeGamePage } from '../pages/resumegame/resumegame';
 import { AlertController } from 'ionic-angular';
+import { GameMessagerService } from './../services/game-messager.service';
 
 @Injectable()
 export class BossProviderService {
@@ -23,7 +24,8 @@ export class BossProviderService {
     private raidDmgService: RaidDmgService,
     private configProviderService: ConfigProviderService,
     public modalCtrl: ModalController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private gameMessagerService: GameMessagerService
   ) {
   }
 
@@ -105,6 +107,7 @@ export class BossProviderService {
     }
     //isWipe ?
     if (this.raidProviderService.isWipe()) {
+      this.gameMessagerService.sendMessage('LOOSE');
       this.stopBossPaternSubscription();
       
       /*let myModal = this.modalCtrl.create(ResumeGamePage);

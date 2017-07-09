@@ -18,6 +18,7 @@ import { AlertController } from 'ionic-angular';
 import { Boss } from '../../models/characters/boss';
 import {Player} from '../../models/characters/player';
 import { Subscription } from 'rxjs/Subscription';
+import { GameMessagerService } from './../../services/game-messager.service';
 
 @Component({
   selector: 'page-grid',
@@ -40,9 +41,16 @@ export class GridPage {
     private playerProviderService: PlayerProviderService,
     private spellProviderService: SpellProviderService,
     private modalCtrl: ModalController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private gameMessagerService: GameMessagerService
   ) {
     'ngInject';
+    this.subscription = this.gameMessagerService.getMessage().subscribe(message => { this.message = message, this.gameEvents(this.message) });
+  }
+
+  gameEvents(message){
+    console.log(message);
+    this.winOrLooseAlert();
   }
 
   ngOnInit() {
@@ -105,6 +113,29 @@ export class GridPage {
     });
     confirm.present();
   }
+
+  winOrLooseAlert() {
+    let confirm = this.alertCtrl.create({
+      title: 'Perdu !!',
+      message: 'Rejouer ?',
+      buttons: [
+        {
+          text: 'Oui',
+          handler: () => {
+            this.startGame();
+          }
+        },
+        {
+          text: 'Non merci',
+          handler: () => {
+            console.log('Rejouer ? Non merci');
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
 
   startGame() {
     //this.setGameStatus(GameState.GAME_STATUS_START);
