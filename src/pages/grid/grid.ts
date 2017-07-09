@@ -16,6 +16,8 @@ import { TutorialPage } from '../tutorial/tutorial';
 import { GameState } from '../../models/game-state.enum';
 import { AppComponent } from './../../app/app.component';
 import { AlertController } from 'ionic-angular';
+import { Boss } from '../../models/characters/boss';
+import {Player} from '../../models/characters/player';
 
 @Component({
   selector: 'page-grid',
@@ -46,7 +48,7 @@ export class GridPage {
   }
 
   openResumeGameModal() {
-    this.gameProviderService.stopGame();
+    this.stopGame();
     let myModal = this.modalCtrl.create(ResumeGamePage);
 
     myModal.onDidDismiss( data => {
@@ -56,7 +58,7 @@ export class GridPage {
             break; 
         }
         case GameState.GAME_STATUS_START: {
-            this._startGame();
+            this.startGame();
             break; 
         }
         case GameState.GAME_STATUS_STOP: {
@@ -73,7 +75,7 @@ export class GridPage {
     let myModal = this.modalCtrl.create(TutorialPage);
 
     myModal.onDidDismiss( () => {
-      this._startGame();
+      this.startGame();
     });
 
     myModal.present();
@@ -94,7 +96,7 @@ export class GridPage {
           text: 'Non merci',
           handler: () => {
             console.log('Agree clicked');
-            this._startGame();
+            this.startGame();
           }
         }
       ]
@@ -102,12 +104,30 @@ export class GridPage {
     confirm.present();
   }
 
-  _startGame() {
-    this.gameProviderService.startGame();
+  startGame() {
+    //this.setGameStatus(GameState.GAME_STATUS_START);
+
+    // Démarre une nouvelle partie
+    this.playerProviderService.setPlayer(new Player('Lea', 20000, 15500));
+    this.playerProviderService.getPlayer().updateMana(-7000);
+    //this.setHealthBar(100);
+    //this.setManaBar(100);
+    this.playerProviderService.startPlayerManaRegen();
+    this.raidProviderService.generateRaid();
+    this.bossProviderService.setBoss(new Boss('THEBOSS', 50000, 'hard'));
+    this.bossProviderService.startBossPattern();
+    this.bossProviderService.startRaidDmgOnBoss();
   }
 
-  _stopGame() {
-    this.gameProviderService.stopGame();
+  stopGame(){
+    //this.setGameStatus(GameState.GAME_STATUS_PAUSE);
+
+    this.playerProviderService.stopPlayerManaRegen(); 
+    this.raidDmgService.stopChangeHeroHealthOnTime();
+    this.bossProviderService.stopBossPaternSubscription();
+    this.bossProviderService.stopRaidDmgOnBoss();
+
+    this.gameProviderService.saveGame();
   }
 
   _getRaid() {
