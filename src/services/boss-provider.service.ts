@@ -52,7 +52,7 @@ export class BossProviderService {
         if(this.getBoss().isDead()){
           this.stopRaidDmgOnBoss();
           this.stopBossPaternSubscription();
-          this.gameMessagerService.sendMessage(GameResult.GAME_RESULT_LOOSE);
+          this.gameMessagerService.sendMessage(GameResult.GAME_RESULT_WIN);
         }
       },
       error: err => console.error('Observer got an error: ' + err),
@@ -105,7 +105,7 @@ export class BossProviderService {
     }
     //isWipe ?
     if (this.raidProviderService.isWipe()) {
-      this.gameMessagerService.sendMessage(""+GameState.GAME_STATUS_LOOSE); // todo enum
+      this.gameMessagerService.sendMessage(GameResult.GAME_RESULT_LOOSE); // todo enum
       this.stopBossPaternSubscription();
     }
   }
