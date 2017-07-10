@@ -118,8 +118,6 @@ export class GridPage {
           handler: () => {
             console.log('Agree clicked');
             this.startGame();
-            var elem = document.getElementById("healthTextBar");
-            elem.style.width = '100%';
           }
         }
       ]

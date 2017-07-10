@@ -22,8 +22,6 @@ export class Player extends Character {
     updateMana(mana) {
         if (this.currentMana + mana > this.baseMana) {
             this.currentMana = this.baseMana;
-        } else if (this.currentMana + mana < 0) {
-            throw "Mana can't be negative";
         } else {
             this.currentMana += mana;
         }

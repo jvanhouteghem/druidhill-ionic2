@@ -42,16 +42,16 @@ export class BossProviderService {
     var observer = {
       next: () => {
         let raidAliveLength = this.raidProviderService.getNbHeroAlive();
-        let minRaidDmg = 10 * raidAliveLength;
-        let maxRaidDmg = 35 * raidAliveLength;
+        let minRaidDmg = 10 * raidAliveLength; // todo moove value into game config
+        let maxRaidDmg = 35 * raidAliveLength; // todo moove value into game config
         let raidFinalDmg = Math.floor((Math.random() * maxRaidDmg) + minRaidDmg);
         this.getBoss().setDmgTaken(this.getBoss().getDmgTaken() + raidFinalDmg)
         this.updateHealthBar(this.getBoss().getCurrentHealthInPercent());
         
         //isDead?
         if(this.getBoss().isDead()){
-          this.stopRaidDmgOnBoss();
-          this.stopBossPaternSubscription();
+          this.stopRaidDmgOnBoss(); // todo moove to observer event
+          this.stopBossPaternSubscription(); // todo moove to observer event
           this.gameMessagerService.sendMessage(GameResult.GAME_RESULT_WIN);
         }
       },
