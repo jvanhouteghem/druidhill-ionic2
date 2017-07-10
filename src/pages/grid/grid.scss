@@ -22,7 +22,7 @@ page-grid {
     //  Boss bars
     //----------------------------------------*/
 
-    #progressBarContainer {
+    .progressBarContainer {
     width: 100%;
     background-color: #ddd;
     margin: 5px 0px;
@@ -64,17 +64,7 @@ page-grid {
     ::-moz-selection {
         background: transparent;
     }
-
-    #topBars {
-        /*text-align:center;*/
-    }
-
-    #progressBarContainer {
-    width: 100%;
-    background-color: #ddd;
-    margin: 5px 0px;
-    }
-
+    
     #progressBar {
     width: 0%;
     height: 18px;

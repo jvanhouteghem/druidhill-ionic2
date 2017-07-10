@@ -17,7 +17,7 @@ import { GameState, GameResult } from '../../models/game-state.enum';
 import { AppComponent } from './../../app/app.component';
 import { AlertController } from 'ionic-angular';
 import { Boss } from '../../models/characters/boss';
-import {Player} from '../../models/characters/player';
+import { Player } from '../../models/characters/player';
 import { Subscription } from 'rxjs/Subscription';
 import { GameMessagerService } from './../../services/game-messager.service';
 
@@ -29,9 +29,9 @@ export class GridPage {
 
   private pendingLeftClick = false; // used to wait if left click is single or double
   private leftClickCount = 0; // used to wait if left click is single or double
-    message: any;
-    subscription: Subscription;
-    private game;
+  message: any;
+  subscription: Subscription;
+  private game;
 
   // Only for event and display
   constructor(
@@ -49,31 +49,31 @@ export class GridPage {
     this.subscription = this.gameMessagerService.getMessage().subscribe(message => { this.message = message, this.gameEvents(this.message) });
   }
 
-  gameEvents(message){
+  gameEvents(message) {
     this.winOrLooseAlert(message.text);
   }
 
   ngOnInit() {
-     this.tutorialAlert();
+    this.tutorialAlert();
   }
 
   openResumeGameModal() {
     this.stopGame();
     let myModal = this.modalCtrl.create(ResumeGamePage);
 
-    myModal.onDidDismiss( data => {
-      switch(data) { 
+    myModal.onDidDismiss(data => {
+      switch (data) {
         case GameState.GAME_STATUS_RESUME: {
-            this.resumeGame();
-            break; 
+          this.resumeGame();
+          break;
         }
         case GameState.GAME_STATUS_START: {
-            this.startGame();
-            break; 
+          this.startGame();
+          break;
         }
         case GameState.GAME_STATUS_STOP: {
-            this.navCtrl.push(AppComponent);
-            break; 
+          this.navCtrl.push(AppComponent);
+          break;
         }
       }
     });
@@ -85,7 +85,7 @@ export class GridPage {
     console.log("try open boss information page");
     let myModal = this.modalCtrl.create(BossInformationPage);
 
-    myModal.onDidDismiss( data => {
+    myModal.onDidDismiss(data => {
       console.log("close boss information page");
     });
 
@@ -95,7 +95,7 @@ export class GridPage {
   openTutorialModal() {
     let myModal = this.modalCtrl.create(TutorialPage);
 
-    myModal.onDidDismiss( () => {
+    myModal.onDidDismiss(() => {
       this.startGame();
     });
 
@@ -118,6 +118,8 @@ export class GridPage {
           handler: () => {
             console.log('Agree clicked');
             this.startGame();
+            var elem = document.getElementById("healthTextBar");
+            elem.style.width = '100%';
           }
         }
       ]
@@ -155,7 +157,7 @@ export class GridPage {
     //this.setGameStatus(GameState.GAME_STATUS_START);
     // Démarre une nouvelle partie
     this.playerProviderService.setPlayer(new Player('Lea', 20000, 15500));
-    this.playerProviderService.getPlayer().updateMana(-7000);
+    //this.playerProviderService.getPlayer().updateMana(-7000);
     //this.setHealthBar(100);
     //this.setManaBar(100);
     this.playerProviderService.startPlayerManaRegen();
@@ -165,9 +167,9 @@ export class GridPage {
     this.bossProviderService.startRaidDmgOnBoss();
   }
 
-  stopGame(){
+  stopGame() {
     //this.setGameStatus(GameState.GAME_STATUS_PAUSE);
-    this.playerProviderService.stopPlayerManaRegen(); 
+    this.playerProviderService.stopPlayerManaRegen();
     this.raidDmgService.stopChangeHeroHealthOnTime();
     this.bossProviderService.stopBossPaternSubscription();
     this.bossProviderService.stopRaidDmgOnBoss();
@@ -175,7 +177,7 @@ export class GridPage {
     this.saveGame();
   }
 
-  resumeGame(){
+  resumeGame() {
     //this.setGameStatus(GameState.GAME_STATUS_RESUME);
     this.playerProviderService.setPlayer(this.game.player);
     //this.playerProviderService.getPlayer().updateMana(-7000);
@@ -203,7 +205,7 @@ export class GridPage {
     return this.game;
   }*/
 
-  saveGame(){
+  saveGame() {
     this.game = {
       player: this.playerProviderService.getPlayer(),
       raid: this.raidProviderService.getRaid(),
