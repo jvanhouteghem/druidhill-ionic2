@@ -1,0 +1,22 @@
+page-bossinformation {
+
+    button {
+    height: 56px;
+    width: 56px;
+    }
+
+    button.imgButton {
+    color: white;
+    background-size:cover; /* <-- scale the image to cover the button */
+    background-position:center center; /* <-- center the image in the button */
+    }
+
+    .resumeattackinfo{
+        font-size:15px;
+    }
+
+    .note-md {
+        color: #ad2424;
+    }
+
+}

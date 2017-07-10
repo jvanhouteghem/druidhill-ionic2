@@ -8,6 +8,7 @@ import { ListPage } from '../pages/list/list';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { GridPage } from '../pages/grid/grid';
 import { ResumeGamePage } from '../pages/resumegame/resumegame';
+import { BossInformationPage } from '../pages/bossinformation/bossinformation';
 
 import {RaidProviderService} from './../services/raid-provider.service';
 import {RaidDmgService} from './../services/raid-dmg.service';
@@ -31,6 +32,7 @@ import { SpellIconsComponent } from '../components/spell-icons/spell-icons.compo
     TutorialPage,
     GridPage,
     ResumeGamePage,
+    BossInformationPage,
     BossBarsComponent,
     PlayerBarsComponent,
     SpellIconsComponent
@@ -46,7 +48,8 @@ import { SpellIconsComponent } from '../components/spell-icons/spell-icons.compo
     ListPage,
     TutorialPage,
     GridPage,
-    ResumeGamePage
+    ResumeGamePage,
+    BossInformationPage
   ],
   providers: [
     StatusBar,

@@ -11,6 +11,7 @@ import * as moment from 'moment/moment';
 import * as Rx from "rxjs/Rx";
 import { ModalController } from 'ionic-angular';
 import { ResumeGamePage } from '../resumegame/resumegame';
+import { BossInformationPage } from '../bossinformation/bossinformation';
 import { TutorialPage } from '../tutorial/tutorial';
 import { GameState, GameResult } from '../../models/game-state.enum';
 import { AppComponent } from './../../app/app.component';
@@ -75,6 +76,17 @@ export class GridPage {
             break; 
         }
       }
+    });
+
+    myModal.present();
+  }
+
+  openBossInformationModal() {
+    console.log("try open boss information page");
+    let myModal = this.modalCtrl.create(BossInformationPage);
+
+    myModal.onDidDismiss( data => {
+      console.log("close boss information page");
     });
 
     myModal.present();

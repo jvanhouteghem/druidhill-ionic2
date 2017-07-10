@@ -6,10 +6,10 @@ import { ModalController } from 'ionic-angular';
 import { TutorialPage } from '../tutorial/tutorial';
 
 @Component({
-  selector: 'page-resumegame',
-  templateUrl: 'resumegame.html'
+  selector: 'page-bossinformation',
+  templateUrl: 'bossinformation.html'
 })
-export class ResumeGamePage {
+export class BossInformationPage {
 
   private displayInfos:boolean;
 
@@ -45,6 +45,10 @@ export class ResumeGamePage {
 
   getDisplayInfos(){
     return this.displayInfos;
+  }
+
+  goback() {
+    this.navCtrl.pop();
   }
 
 }

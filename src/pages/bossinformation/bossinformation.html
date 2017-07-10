@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-navbar hideBackButton="true">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="goback()">
+        <ion-icon name="pause"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goback()">
+        <ion-icon name="book"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="settings"></ion-icon> <!-- help-circle construct menu pause stats refresh -->
+      </button>
+    </ion-buttons>
+
+    <ion-title>DruidHill</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-list-header>
+    <ion-item>
+      <ion-note item-start><img src="assets/images/boss10.svg" height="25px"/></ion-note >
+      <ion-note style="color:black">
+        Graâl - Dieu des tourments
+      </ion-note>
+      <ion-note item-end>
+        Hard
+      </ion-note>
+    </ion-item>
+    </ion-list-header>
+
+  <button ion-button block (click)="toggleDisplayInfos()">Informations</button>
+
+  <ion-list no-border>
+<!-- 
+      <div class="item row" style="text-align:left">
+        <span class="col"><img src="assets/images/boss10.svg" /></span>
+        <span class="col">Graâl - Dieu des tourments</span>
+      </div>
+  -->
+    <ion-item>
+      <ion-icon name='flask' item-start></ion-icon>
+      <ion-note  class="resumeattackinfo">
+       0.5k dmg / 0.5s - Target : tank
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='body' item-start></ion-icon>
+      <ion-note  class="resumeattackinfo">
+        1k dmg / 1s - Target : random
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='leaf' item-start></ion-icon>
+      <ion-note  class="resumeattackinfo">
+        10k dmg / 5s - Target : random
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='flask' item-start></ion-icon>
+      <ion-note  class="resumeattackinfo">
+        0.3k dmg / 0.3s - Target : random
+      </ion-note>
+    </ion-item>
+
+    <p><strong>Astuce :</strong> Faites très attention à l'attaque <a>slash</a> de Graâl. En cas de coup dur utilisez <a>Tranquilité.</a></p>
+  </ion-list>
+
+  <button ion-button block (click)="goback()">Resume</button>
+
+</ion-content>

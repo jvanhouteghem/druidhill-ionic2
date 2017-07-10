@@ -8,7 +8,7 @@ export class ConfigProviderService {
 
   constructor() {
     this.gameConfig = {
-      globalCooldown: 150
+      globalCooldown: 100
     }
   }
 
