@@ -5,18 +5,18 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class GameMessagerService {
 
-    private subject = new Subject<any>();
+    private gameResultSubject = new Subject<any>();
  
     sendMessage(message: string | number) {
-        this.subject.next({ text: message });
+        this.gameResultSubject.next({ text: message });
     }
  
     clearMessage() {
-        this.subject.next();
+        this.gameResultSubject.next();
     }
  
-    getMessage(): Observable<any> {
-        return this.subject.asObservable();
+    getGameResultMessage(): Observable<any> {
+        return this.gameResultSubject.asObservable();
     }
 
 }
