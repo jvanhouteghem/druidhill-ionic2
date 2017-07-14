@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BossProviderService } from './../../services/boss-provider.service';
 import { Subscription } from 'rxjs/Subscription';
-import { GameMessagerService, GameState, GameResult } from './../../services/game-messager.service';
+import { GameMessagerService, GameState } from './../../services/game-messager.service';
 import { ConfigProviderService } from './../../services/config-provider.service';
 
 @Component({

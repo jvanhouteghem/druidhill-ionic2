@@ -16,7 +16,7 @@ import { AppComponent } from './../../app/app.component';
 import { Boss } from '../../models/characters/boss';
 import { Player } from '../../models/characters/player';
 import { Subscription } from 'rxjs/Subscription';
-import { GameMessagerService, GameState, GameResult } from './../../services/game-messager.service';
+import { GameMessagerService, GameState } from './../../services/game-messager.service';
 
 @Component({
   selector: 'page-grid',
@@ -57,7 +57,18 @@ export class GridPage {
           break;
         }
         case GameState.GAME_STATUS_STOP: {
+          this.stopGame();
           this.navCtrl.push(AppComponent);
+          break;
+        }
+        case GameState.GAME_RESULT_WIN: {
+          this.stopGame();
+          this.gameResultAlert(message);
+          break;
+        }
+        case GameState.GAME_RESULT_LOOSE: {
+          this.stopGame();
+          this.gameResultAlert(message);
           break;
         }
       }
@@ -173,7 +184,7 @@ export class GridPage {
 
 
   gameResultAlert(message) {
-    let gameResult = message == GameResult.GAME_RESULT_WIN ? "Victory" : "Defeat";
+    let gameResult = message == GameState.GAME_RESULT_WIN ? "Victory" : "Defeat";
     let confirm = this.alertCtrl.create({
       title: gameResult + ' !!',
       message: 'Rejouer ?',

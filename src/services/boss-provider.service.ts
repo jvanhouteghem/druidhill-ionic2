@@ -9,7 +9,7 @@ import { Hero } from '../models/characters/hero';
 import * as Rx from "rxjs/Rx";
 import { ResumeGamePage } from '../pages/resumegame/resumegame';
 import { AlertController } from 'ionic-angular';
-import { GameMessagerService, GameState, GameResult } from './../services/game-messager.service';
+import { GameMessagerService, GameState} from './../services/game-messager.service';
 
 @Injectable()
 export class BossProviderService {
@@ -51,7 +51,7 @@ export class BossProviderService {
         if(this.getBoss().isDead()){
           this.stopRaidDmgOnBoss(); // todo moove to observer event
           this.stopBossPaternSubscription(); // todo moove to observer event
-          this.gameMessagerService.sendGameResultMessage(GameResult.GAME_RESULT_WIN);
+          this.gameMessagerService.sendGameResultMessage(GameState.GAME_RESULT_WIN);
         }
       },
       error: err => console.error('Observer got an error: ' + err),
@@ -104,7 +104,7 @@ export class BossProviderService {
     }
     //isWipe ?
     if (this.raidProviderService.isWipe()) {
-      this.gameMessagerService.sendGameResultMessage(GameResult.GAME_RESULT_LOOSE); // todo enum
+      this.gameMessagerService.sendGameResultMessage(GameState.GAME_RESULT_LOOSE); // todo enum
       this.stopBossPaternSubscription();
     }
   }

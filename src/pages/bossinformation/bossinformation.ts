@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { TutorialPage } from '../tutorial/tutorial';
-import { GameMessagerService, GameState, GameResult } from './../../services/game-messager.service';
+import { GameMessagerService, GameState } from './../../services/game-messager.service';
 
 @Component({
   selector: 'page-bossinformation',
