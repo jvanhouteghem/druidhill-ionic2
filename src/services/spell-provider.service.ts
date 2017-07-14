@@ -123,13 +123,13 @@ export class SpellProviderService {
         return this.getHeals()[i];
       }
     }
-    throw "No heal for this id : " + healId;
+    //throw "No heal for this id : " + healId;
   }
 
   // Loop each hero to get last time a spell was used
   getLastTimeSpellUsed(spellId?: string) {
     let result = moment().clone().startOf('day');
-    for (let i = 0; i < this.raidProviderService.getRaid().length; i++) {
+    for (let i = 0; this.raidProviderService.getRaid() && i < this.raidProviderService.getRaid().length; i++) {
       let currentHeroSpells = this.raidProviderService.getRaid()[i].getSpellsOnHero();
       for (let j = 0; j < currentHeroSpells.length; j++) {
 
@@ -175,8 +175,12 @@ export class SpellProviderService {
   getHealCooldown(spellId: string, inputMoment) {
     var now = inputMoment; //todays date
     var lastTime = this.getLastTimeSpellUsed(spellId) // another date
-    var duration = this.getHealById(spellId).cooldown / 1000 - Math.round(moment.duration(now.diff(lastTime)).asSeconds());
-    return duration > 0 ? duration + "s" : "";
+    if (this.getHealById(spellId)){
+      var duration = this.getHealById(spellId).cooldown / 1000 - Math.round(moment.duration(now.diff(lastTime)).asSeconds());
+      return duration > 0 ? duration + "s" : "";
+    } else {
+      return "lolilol";
+    }
   }
 
   /*

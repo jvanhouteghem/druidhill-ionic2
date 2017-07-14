@@ -1,19 +1,44 @@
 <ion-grid>
     <ion-row>
         <ion-col>
-            <img class="animated" [ngClass]="{'healicon-fade': _isHealOnCooldown('0001'), 'rubberBand': animation[0].animate}" src="assets/images/0001.jpg" (click)="test()"/>
+            <div class="icon-container">
+                <img class="animated" [ngClass]="{'healicon-fade': _isHealOnCooldown('0001'), 'rubberBand': animation[0].animate}" src="assets/images/0001.jpg" (click)="test()"/>
+                <div class="icon-cooldown-value" [ngClass]="{'icon-cooldown-value-display': _isHealOnCooldown('0001')}">
+                    <div class="icon-cooldown-text">{{_getHealCooldown("0001")}}</div>
+                </div>
+            </div>
         </ion-col>
         <ion-col>
-            <img class="animated" [ngClass]="{'healicon-fade': _isHealOnCooldown('0002'), 'rubberBand': animation[1].animate}" src="assets/images/0002.jpg"/>
+            <div class="icon-container">
+                <img class="animated" [ngClass]="{'healicon-fade': _isHealOnCooldown('0002'), 'rubberBand': animation[1].animate}" src="assets/images/0002.jpg">
+                <div class="icon-cooldown-value" [ngClass]="{'icon-cooldown-value-display': _isHealOnCooldown('0002')}">
+                    <div class="icon-cooldown-text">{{_getHealCooldown("0002")}}</div>
+                </div>
+            </div>
         </ion-col>
         <ion-col>
-            <img class="animated" [ngClass]="{'healicon-fade': _isHealOnCooldown('0003'), 'rubberBand': animation[2].animate}" src="assets/images/0003.jpg"/>
+            <div class="icon-container">
+                <img class="animated" [ngClass]="{'healicon-fade': _isHealOnCooldown('0003'), 'rubberBand': animation[2].animate}" src="assets/images/0003.jpg">
+                <div class="icon-cooldown-value" [ngClass]="{'icon-cooldown-value-display': _isHealOnCooldown('0003')}">
+                    <div class="icon-cooldown-text">{{_getHealCooldown("0003")}}</div>
+                </div>
+            </div>
         </ion-col>
         <ion-col>
-            <img class="animated" [ngClass]="{'healicon-fade': _isHealOnCooldown('0004'), 'rubberBand': animation[3].animate}" src="assets/images/0004.jpg" (click)="_innervate()" />
+            <div class="icon-container" (click)="_innervate()">
+                <img class="animated" [ngClass]="{'healicon-fade': _isHealOnCooldown('0004'), 'rubberBand': animation[3].animate}" src="assets/images/0004.jpg"/>
+                <div class="icon-cooldown-value" [ngClass]="{'icon-cooldown-value-display': _isHealOnCooldown('0004')}">
+                    <div class="icon-cooldown-text">{{_getHealCooldown("0004")}}</div>
+                </div>
+            </div>
         </ion-col>
         <ion-col>
-            <img class="animated" [ngClass]="{'healicon-fade': _isHealOnCooldown('0005'), 'rubberBand': animation[4].animate}" src="assets/images/0005.jpg"(click)="_tranquility()" />
+            <div class="icon-container" (click)="_tranquility()">
+                <img class="animated" [ngClass]="{'healicon-fade': _isHealOnCooldown('0005'), 'rubberBand': animation[4].animate}" src="assets/images/0005.jpg"/>
+                <div class="icon-cooldown-value" [ngClass]="{'icon-cooldown-value-display': _isHealOnCooldown('0005')}">
+                    <div class="icon-cooldown-text">{{_getHealCooldown("0005")}}</div>
+                </div>
+            </div>
         </ion-col>
     </ion-row>
 </ion-grid>
