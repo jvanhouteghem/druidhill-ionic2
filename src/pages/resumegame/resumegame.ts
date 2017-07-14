@@ -1,9 +1,9 @@
 import { Component, forwardRef, Inject } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ViewController } from 'ionic-angular';
-import { GameState } from '../../models/game-state.enum';
 import { ModalController } from 'ionic-angular';
 import { TutorialPage } from '../tutorial/tutorial';
+import { GameMessagerService, GameState, GameResult } from './../../services/game-messager.service';
 
 @Component({
   selector: 'page-resumegame',
@@ -16,22 +16,26 @@ export class ResumeGamePage {
   constructor(
     public navCtrl: NavController, 
     public viewCtrl: ViewController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private gameMessagerService: GameMessagerService
   ) {
     'ngInject';
     this.displayInfos = true;
   }
 
   closeModalAndResume() {
-    this.viewCtrl.dismiss(GameState.GAME_STATUS_RESUME);
+    this.gameMessagerService.sendGameResultMessage(GameState.GAME_STATUS_RESUME);
+    this.viewCtrl.dismiss();
   }
 
   closeModalAndRestart() {
-    this.viewCtrl.dismiss(GameState.GAME_STATUS_START);
+    this.gameMessagerService.sendGameResultMessage(GameState.GAME_STATUS_START);
+    this.viewCtrl.dismiss();
   }
 
   closeModalAndQuit(){
-    this.viewCtrl.dismiss(GameState.GAME_STATUS_STOP);
+    this.gameMessagerService.sendGameResultMessage(GameState.GAME_STATUS_STOP);
+    this.viewCtrl.dismiss();
   }
 
   closeModalAndOpenTutorial() {

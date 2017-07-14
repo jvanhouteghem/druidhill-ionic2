@@ -8,7 +8,8 @@ export class ConfigProviderService {
 
   constructor() {
     this.gameConfig = {
-      globalCooldown: 100
+      globalCooldown: 100,
+      bossSpeechTimeDisplay: 1250
     }
   }
 

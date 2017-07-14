@@ -1,3 +1,4 @@
 export interface GameConfig { 
-   globalCooldown:number
+   globalCooldown:number,
+   bossSpeechTimeDisplay:number
 }

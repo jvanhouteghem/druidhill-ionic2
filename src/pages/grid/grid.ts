@@ -12,12 +12,11 @@ import { Hero } from './../../models/characters/hero';
 import { ResumeGamePage } from '../resumegame/resumegame';
 import { BossInformationPage } from '../bossinformation/bossinformation';
 import { TutorialPage } from '../tutorial/tutorial';
-import { GameState, GameResult } from '../../models/game-state.enum';
 import { AppComponent } from './../../app/app.component';
 import { Boss } from '../../models/characters/boss';
 import { Player } from '../../models/characters/player';
 import { Subscription } from 'rxjs/Subscription';
-import { GameMessagerService } from './../../services/game-messager.service';
+import { GameMessagerService, GameState, GameResult } from './../../services/game-messager.service';
 
 @Component({
   selector: 'page-grid',
@@ -44,7 +43,24 @@ export class GridPage {
     private gameMessagerService: GameMessagerService
   ) {
     'ngInject';
-    this.subscription = this.gameMessagerService.getGameResultMessage().subscribe(message => { this.message = message, this.gameResultAlert(this.message.text) });
+    this.subscription = this.gameMessagerService.getGameResultMessage().subscribe(message => { this.message = message, this.gameResultMessageDispatcher(this.message.text) });
+  }
+
+  gameResultMessageDispatcher(message){
+      switch (message) {
+        case GameState.GAME_STATUS_RESUME: {
+          this.resumeGame();
+          break;
+        }
+        case GameState.GAME_STATUS_START: {
+          this.startGame();
+          break;
+        }
+        case GameState.GAME_STATUS_STOP: {
+          this.navCtrl.push(AppComponent);
+          break;
+        }
+      }
   }
 
   ngOnInit() {
@@ -102,11 +118,11 @@ export class GridPage {
   _getHeroHealthInPercent(heroId: number) {
     return this.raidProviderService.getRaid()[heroId].getCurrentHealthInPercent();
   }
+  
 
   leftClickOnHero(evt, heroId) {
     let that = this;
     this.leftClickCount++;
-
     if (!that.pendingLeftClick) {
       that.pendingLeftClick = true;
       setTimeout(function () {
@@ -114,11 +130,13 @@ export class GridPage {
         if (that.leftClickCount >= 2) {
           let hero = that.raidProviderService.getRaid()[heroId];
           that.raidDmgService.healingTouch(hero);
+          that.gameMessagerService.sendSpellMessage("0002");
         }
         // single click
         else {
           let hero = that.raidProviderService.getRaid()[heroId];
           that.raidDmgService.rejuvenation(hero);
+          that.gameMessagerService.sendSpellMessage("0001");
         }
         that.leftClickCount = 0;
         that.pendingLeftClick = false;
@@ -128,6 +146,7 @@ export class GridPage {
 
   rightClickOnHero(evt, heroId) {
     this.raidDmgService.wildGrowth(heroId);
+    this.gameMessagerService.sendSpellMessage("0003");
   }
 
   getPlayer() {
@@ -138,22 +157,6 @@ export class GridPage {
   openResumeGameModal() {
     this.stopGame();
     let myModal = this.modalCtrl.create(ResumeGamePage);
-    myModal.onDidDismiss(data => {
-      switch (data) {
-        case GameState.GAME_STATUS_RESUME: {
-          this.resumeGame();
-          break;
-        }
-        case GameState.GAME_STATUS_START: {
-          this.startGame();
-          break;
-        }
-        case GameState.GAME_STATUS_STOP: {
-          this.navCtrl.push(AppComponent);
-          break;
-        }
-      }
-    });
     myModal.present();
   }
 
@@ -196,8 +199,7 @@ export class GridPage {
         {
           text: 'Non merci',
           handler: () => {
-            console.log('Agree clicked');
-            this.startGame();
+            this.gameMessagerService.sendGameResultMessage(GameState.GAME_STATUS_START);
           }
         }
       ]
@@ -218,7 +220,7 @@ export class GridPage {
           clearInterval(int);
         }
         log.innerHTML = "" + scoreDisplayed;
-    }, 100);*/
-  }
+    }, 100);
+  }*/
 
 }

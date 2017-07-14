@@ -1,20 +1,23 @@
 <div id="BossBars centerpanel">
   <!-- left -->
-  <div class="leftpanel">
+  <div class="leftpanel" (click)="bossSpeechPop('Ne touchez pas à mon visage !')">
     <img src="assets/images/boss10.svg" class="boss"/>
   </div>
   <!-- right -->
   <div class="rightpanel">
-    <!-- health bar -->
+    <div [hidden]="bossSpeedDisplay">
     <div class="progressBarContainer">
       <div id="bossHealthTextBar">{{_getBossFormatHealth()}}</div>
       <div id="bossHealthBar"></div>
     </div>
-    <!-- progress bar -->
     <div>
       <div class="progressBarContainer">
         <div id="progressBar"></div>
       </div>
+    </div>
+    </div>
+    <div class="boss-talk" [hidden]="!bossSpeedDisplay">
+      <div class="bubble me animated infinite pulse">{{bossSpeech}}</div>
     </div>
   </div>
 </div>
