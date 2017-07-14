@@ -1,0 +1,41 @@
+page-endgame {
+
+.modal-wrapper-alertlike {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+}
+
+.modal-wrapper-alertlike-middle {
+    position: absolute;
+    width: 90%;
+    height: 40%; 
+    top: 20%;
+    left: 5%;
+    background: white;
+  }
+
+  .victory-header{
+    margin: 0px;
+  }
+
+  .victory-header-title{
+    color:black;
+  }
+
+  .victory-title{
+    font-size: 25px;
+    margin: 0px 0px 15px 0px;
+    position: relative;
+    /* left: 16px; */
+    top: 0px;
+    z-index: 9999;
+    width: 90%;
+    margin: 0px 0px 0px 0px;
+  }
+
+  .victory-score{
+      margin: 5px 0px 0px 0px
+  }
+
+}

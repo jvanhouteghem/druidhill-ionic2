@@ -1,0 +1,45 @@
+<div class="modal-wrapper-alertlike">
+  <div class="modal-wrapper-alertlike-middle">
+    <ion-list-header class="victory-header">
+      <ion-item>
+        <ion-note item-start><img src="assets/images/boss10.svg" height="25px" /></ion-note>
+        <ion-note class="victory-header-title"> 
+          Graâl - Dieu des tourments
+        </ion-note>
+        <ion-note item-end>
+          Hard
+        </ion-note>
+      </ion-item>
+    </ion-list-header>
+
+    <ion-content>
+
+  <!-- Item with a label and content -->
+  <ion-item>
+    <ion-label class="victory-title">
+      Victoire
+    </ion-label>
+    <div item-content class="victory-score">
+      <ion-icon name="star"></ion-icon>
+      <ion-icon name="star"></ion-icon>
+      <ion-icon name="star"></ion-icon>
+      <ion-icon name="star-outline"></ion-icon>
+      <ion-icon name="star-outline"></ion-icon>
+      (1250 pts)
+    </div>
+  </ion-item>
+
+  <!-- Item divider with a right button -->
+  <div *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]; let i = index">
+    <ion-item-divider>
+      Item Divider {{i}}
+      <ion-badge item-end>26{{i}}</ion-badge>
+    </ion-item-divider>
+  </div>
+
+    </ion-content>
+
+    <button ion-button block (click)="closeModalAndRestart()">Recommencer</button>
+    <button ion-button block (click)="closeModalAndQuit()">Quitter</button>
+  </div>
+</div>

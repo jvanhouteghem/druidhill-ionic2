@@ -10,6 +10,7 @@ import { PlayerProviderService } from './../../services/player-provider.service'
 import { SpellProviderService } from './../../services/spell-provider.service';
 import { Hero } from './../../models/characters/hero';
 import { ResumeGamePage } from '../resumegame/resumegame';
+import { EndGamePage } from '../endgame/endgame';
 import { BossInformationPage } from '../bossinformation/bossinformation';
 import { TutorialPage } from '../tutorial/tutorial';
 import { AppComponent } from './../../app/app.component';
@@ -63,12 +64,12 @@ export class GridPage {
         }
         case GameState.GAME_RESULT_WIN: {
           this.stopGame();
-          this.gameResultAlert(message);
+          this.openGameResultModal(message);//this.gameResultAlert(message);
           break;
         }
         case GameState.GAME_RESULT_LOOSE: {
           this.stopGame();
-          this.gameResultAlert(message);
+          this.openGameResultModal(message);//this.gameResultAlert(message);
           break;
         }
       }
@@ -82,7 +83,7 @@ export class GridPage {
     this.playerProviderService.setPlayer(new Player('Lea', 20000, 15500));
     this.playerProviderService.startPlayerManaRegen();
     this.raidProviderService.generateRaid();
-    this.bossProviderService.setBoss(new Boss('THEBOSS', 50000, 'hard'));
+    this.bossProviderService.setBoss(new Boss('THEBOSS', 1500, 'hard'));
     this.bossProviderService.startBossPattern();
     this.bossProviderService.startRaidDmgOnBoss();
   }
@@ -182,8 +183,14 @@ export class GridPage {
     myModal.present();
   }
 
+  openGameResultModal(message:string) {
+    let obj = {gameResult: message};
+    let myModal = this.modalCtrl.create(EndGamePage, obj);
+    //myModal.onDidDismiss(() => { this.startGame(); });
+    myModal.present();
+  }
 
-  gameResultAlert(message) {
+  /*gameResultAlert(message) {
     let gameResult = message == GameState.GAME_RESULT_WIN ? "Victory" : "Defeat";
     let confirm = this.alertCtrl.create({
       title: gameResult + ' !!',
@@ -194,7 +201,7 @@ export class GridPage {
       ]
     });
     confirm.present();
-  }
+  }*/
 
   tutorialAlert() {
     let confirm = this.alertCtrl.create({

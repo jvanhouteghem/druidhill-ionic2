@@ -2,15 +2,27 @@ page-resumegame {
 
 /* --------------- */
 
-button {
-  height: 56px;
-  width: 56px;
+.modal-wrapper-alertlike {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
 }
 
-button.imgButton {
-  color: white;
-  background-size:cover; /* <-- scale the image to cover the button */
-  background-position:center center; /* <-- center the image in the button */
-}
+.modal-wrapper-alertlike-middle {
+    position: absolute;
+    width: 90%;
+    height: 40%; 
+    top: 20%;
+    left: 5%;
+    background: white;
+  }
+
+/*.modal-wrapper-alertlike {
+    position: absolute;
+    width: 90%;
+    height: 65%; 
+    top: 20%;
+    left: 5%;
+  }*/
 
 }
