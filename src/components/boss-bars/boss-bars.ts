@@ -12,7 +12,7 @@ export class BossBarsComponent /*implements OnInit*/ {
 
   subscription: Subscription;
   bossSpeech:string;
-  bossSpeedDisplay:boolean = false;
+  bossSpeechDisplay:boolean = false;
 
   constructor(
     private bossProviderService:BossProviderService,
@@ -43,12 +43,11 @@ export class BossBarsComponent /*implements OnInit*/ {
   }
 
   bossSpeechPop(speech:string){
-    let that = this;
     this.bossSpeech = speech;
-    this.bossSpeedDisplay = true;
+    this.bossSpeechDisplay = true;
     setTimeout(() => {
-      this.bossSpeedDisplay = false;
-    }, this.configProviderService.getConfig().bossSpeechTimeDisplay);
+      this.bossSpeechDisplay = false;
+    }, 1200);
   }
 
 }

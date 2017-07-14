@@ -272,11 +272,10 @@ button.imgButton {
     border-radius: 5px;
     box-shadow: 0 0 6px #B2B2B2;
     display: inline-block;
-    padding: 15px 18px;
+    padding: 9px 18px;
     position: relative;
     vertical-align: top;
-    position: fixed;
-    z-index: 9999;
+    height: 48px;
 }
 
 .bubble::before {
@@ -297,9 +296,7 @@ button.imgButton {
 }
 
 .me {
-    float: left;
-    top: 74%;
-    width: 70%;
+    float: left;    
 } 
 
 }
