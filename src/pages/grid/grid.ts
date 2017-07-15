@@ -50,7 +50,6 @@ export class GridPage {
   }
 
   gameResultMessageDispatcher(message){
-    console.log(message);
       switch (message) {
         case GameState.GAME_STATUS_RESUME: {
           this.resumeGame();
@@ -94,7 +93,7 @@ export class GridPage {
     this.playerProviderService.updateManaBar(100);
     this.playerProviderService.startPlayerManaRegen();
     this.raidProviderService.generateRaid();
-    this.bossProviderService.setBoss(new Boss('THEBOSS', 10000, 'hard'));
+    this.bossProviderService.setBoss(new Boss('THEBOSS', 30000, 'hard'));
     this.bossProviderService.updateHealthBar(100);
     this.bossProviderService.startBossPattern();
     this.bossProviderService.startRaidDmgOnBoss();

@@ -80,7 +80,7 @@ export class RaidDmgService {
 
     // Observer receive
     let observer = {
-      next: x => {this.changeHeroHealth(hero, inputValue)/*, console.log("startChangeHeroHealthOnTime tick")*/},
+      next: x => {this.changeHeroHealth(hero, inputValue)},
       error: err => console.error('Observer got an error: ' + err),
       complete: () => console.log('Observer got a complete notification : heal done'),
     };

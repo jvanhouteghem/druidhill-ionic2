@@ -81,7 +81,7 @@ export class Boss extends Character {
                 {
                     type: ["N"],
                     target: ["R"],
-                    damages: 28000,
+                    damages: 8000,
                     period: 3500,
                     addFocus: false
                 },
