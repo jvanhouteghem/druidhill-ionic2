@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RaidProviderService } from './raid-provider.service';
 import { PlayerProviderService } from './player-provider.service';
 import { SpellProviderService } from './spell-provider.service';
+import { GameMessagerService } from './game-messager.service';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from "rxjs";
 import { Boss } from '../models/characters/boss';
@@ -23,6 +24,7 @@ export class RaidDmgService {
     private raidProviderService: RaidProviderService,
     private playerProviderService: PlayerProviderService,
     private spellProviderService: SpellProviderService,
+    private gameMessagerService: GameMessagerService,
   ) {
     'ngInject';
     this.healJson = this.spellProviderService.getHeals();
@@ -59,6 +61,7 @@ export class RaidDmgService {
       }
       // Else receive full heal
       else {
+        this.gameMessagerService.sendHealDoneEventMessage(inputValue);
         hero.setDmgTaken(hero.getDmgTaken() + inputValue);
       }
     }

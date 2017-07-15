@@ -8,6 +8,7 @@ import { RaidDmgService } from './../../services/raid-dmg.service';
 import { BossProviderService } from './../../services/boss-provider.service';
 import { PlayerProviderService } from './../../services/player-provider.service';
 import { SpellProviderService } from './../../services/spell-provider.service';
+import { GameRegisterService } from './../../services/game-register.service';
 import { Hero } from './../../models/characters/hero';
 import { ResumeGamePage } from '../resumegame/resumegame';
 import { EndGamePage } from '../endgame/endgame';
@@ -41,13 +42,15 @@ export class GridPage {
     private spellProviderService: SpellProviderService,
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
-    private gameMessagerService: GameMessagerService
+    private gameMessagerService: GameMessagerService,
+    private gameRegisterService:GameRegisterService
   ) {
     'ngInject';
     this.subscription = this.gameMessagerService.getGameResultMessage().subscribe(message => { this.message = message, this.gameResultMessageDispatcher(this.message.text) });
   }
 
   gameResultMessageDispatcher(message){
+    console.log(message);
       switch (message) {
         case GameState.GAME_STATUS_RESUME: {
           this.resumeGame();
@@ -59,9 +62,6 @@ export class GridPage {
         }
         case GameState.GAME_STATUS_STOP: {
           this.stopGame();
-          this.raidProviderService.cleanRaid();
-          this.gameMessagerService.cleanMessages();
-          this.navCtrl.push(AppComponent);
           break;
         }
         case GameState.GAME_RESULT_WIN: {
@@ -72,6 +72,13 @@ export class GridPage {
         case GameState.GAME_RESULT_LOOSE: {
           this.stopGame();
           this.openGameResultModal(message);//this.gameResultAlert(message);
+          break;
+        }
+        case GameState.GAME_STATUS_CLOSE: {
+          this.stopGame();
+          this.raidProviderService.cleanRaid();
+          this.gameMessagerService.cleanMessages();
+          this.navCtrl.push(AppComponent);
           break;
         }
       }
@@ -87,7 +94,7 @@ export class GridPage {
     this.playerProviderService.updateManaBar(100);
     this.playerProviderService.startPlayerManaRegen();
     this.raidProviderService.generateRaid();
-    this.bossProviderService.setBoss(new Boss('THEBOSS', 30000, 'hard'));
+    this.bossProviderService.setBoss(new Boss('THEBOSS', 5000, 'hard'));
     this.bossProviderService.updateHealthBar(100);
     this.bossProviderService.startBossPattern();
     this.bossProviderService.startRaidDmgOnBoss();
@@ -172,7 +179,7 @@ export class GridPage {
 
 
   openResumeGameModal() {
-    this.stopGame();
+    this.gameMessagerService.sendGameResultMessage(GameState.GAME_STATUS_STOP);
     let myModal = this.modalCtrl.create(ResumeGamePage);
     myModal.present();
   }

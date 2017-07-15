@@ -34,7 +34,7 @@ export class ResumeGamePage {
   }
 
   closeModalAndQuit(){
-    this.gameMessagerService.sendGameResultMessage(GameState.GAME_STATUS_STOP);
+    this.gameMessagerService.sendGameResultMessage(GameState.GAME_STATUS_CLOSE);
     this.viewCtrl.dismiss();
   }
 

@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { NavParams, ViewController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { GameMessagerService, GameState } from './../../services/game-messager.service';
+import { GameRegisterService, GameRegister} from './../../services/game-register.service';
 
 @Component({
   selector: 'page-endgame',
@@ -11,6 +12,7 @@ import { GameMessagerService, GameState } from './../../services/game-messager.s
 export class EndGamePage {
 
   gameResult: GameState = this.navParams.get('gameResult');
+  gameRegister: GameRegister;
 
   private displayInfos:boolean;
 
@@ -19,9 +21,11 @@ export class EndGamePage {
     public navCtrl: NavController, 
     public viewCtrl: ViewController,
     private modalCtrl: ModalController,
-    private gameMessagerService: GameMessagerService
+    private gameMessagerService: GameMessagerService,
+    private gameRegisterService: GameRegisterService
   ) {
     'ngInject';
+    this.gameRegister = this.gameRegisterService.getGameRegister();
   }
 
   getGameResultTemplate(gameResult: GameState){
