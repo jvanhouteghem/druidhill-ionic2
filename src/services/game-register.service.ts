@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GameConfig } from './../models/game-config.interface';
 import { Subscription } from 'rxjs/Subscription';
-import { GameMessagerService, GameState } from './../services/game-messager.service';
+import { GameMessagerService, GameState, InGameEvents } from './../services/game-messager.service';
 import * as moment from 'moment/moment';
 
 export interface GameRegister {
@@ -17,6 +17,7 @@ export class GameRegisterService {
 
   gameResultSubscription: Subscription;
   healsDoneSubscription: Subscription;
+  inGameEventsSubscription: Subscription;
   gameRegister: GameRegister;
 
   subscription: Subscription;
@@ -30,6 +31,8 @@ export class GameRegisterService {
     this.gameResultSubscription = this.gameMessagerService.getGameResultMessage().subscribe(message => { this.gameResultDispatcher(message.text) });
     // Register total heals done
     this.healsDoneSubscription = this.gameMessagerService.getHealDoneEventMessage().subscribe(message => {this.healsDoneDispatcher(message.text)});
+    // Register total heals done
+    this.inGameEventsSubscription = this.gameMessagerService.getInGameEventMessage().subscribe(message => {this.inGameEventsDispatcher(message.text)});
   }
 
   getGameRegister(){
@@ -69,17 +72,19 @@ export class GameRegisterService {
         break;
       }
     }
-    //console.log("GameRegisterService.gameResultDispatcher : ", message, this.gameRegister.duration);
   }
 
   healsDoneDispatcher(message:number){
     this.gameRegister.healDone = this.gameRegister.healDone + (message * -1);
   }
 
-  /*
-        var now = moment().clone(); //todays date
-        var lastTime = this.spellsOnHero[i].lastTimeUsed; // another date
-        var duration = moment.duration(now.diff(lastTime)).asMilliseconds();
-  */
+  inGameEventsDispatcher(message){
+    switch (message) {
+      case InGameEvents.INGAME_DEATH: {
+        this.gameRegister.nbDeath++;
+        break;
+      }
+    }
+  }
 
 }

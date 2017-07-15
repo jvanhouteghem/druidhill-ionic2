@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { RaidProviderService } from './raid-provider.service';
 import { PlayerProviderService } from './player-provider.service';
 import { SpellProviderService } from './spell-provider.service';
-import { GameMessagerService } from './game-messager.service';
+import { GameMessagerService, InGameEvents } from './game-messager.service';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from "rxjs";
 import { Boss } from '../models/characters/boss';
@@ -49,8 +49,9 @@ export class RaidDmgService {
     if (!this.isHeal(inputValue) && hero.isDmgPossible(hero)) {
       hero.setDmgTaken(hero.getDmgTaken() + inputValue);
       // Lethal
-      if (hero.isLethalDmg(hero, inputValue)) {
+      if (hero.isLethalDmg(inputValue)) {
         hero.kill();
+        this.gameMessagerService.sendInGameEventMessage(InGameEvents.INGAME_DEATH);
       }
     }
     // Heal

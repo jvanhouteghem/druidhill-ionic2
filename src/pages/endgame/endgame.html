@@ -38,6 +38,10 @@
         Heal/seconde :
         <ion-badge item-end>{{gameRegister.healDone/(gameRegister.duration/1000) | number : '1.0-0'}} hps</ion-badge>
       </ion-item-divider>
+      <ion-item-divider>
+        Morts :
+        <ion-badge item-end>{{gameRegister.nbDeath}}</ion-badge>
+      </ion-item-divider>
     </ion-content>
 
     <button ion-button block (click)="closeModalAndRestart()">Recommencer</button>

@@ -123,7 +123,7 @@ export class BossProviderService /*implements OnDestroy*/{
       if (attack.target[0] == "T" && attack.addFocus) {
         this.getBoss().setFocus(target);
       }
-      this.raidDmgService.changeHeroHealth(target, attack.damages);
+      this.raidDmgService.changeHeroHealth(target, attack.damages);     
     }
   }
 
