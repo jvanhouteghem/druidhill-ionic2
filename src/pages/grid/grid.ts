@@ -83,9 +83,12 @@ export class GridPage {
 
   startGame() {
     this.playerProviderService.setPlayer(new Player('Lea', 20000, 15500));
+    this.playerProviderService.updateHealthBar(100);
+    this.playerProviderService.updateManaBar(100);
     this.playerProviderService.startPlayerManaRegen();
     this.raidProviderService.generateRaid();
-    this.bossProviderService.setBoss(new Boss('THEBOSS', 1500, 'hard'));
+    this.bossProviderService.setBoss(new Boss('THEBOSS', 30000, 'hard'));
+    this.bossProviderService.updateHealthBar(100);
     this.bossProviderService.startBossPattern();
     this.bossProviderService.startRaidDmgOnBoss();
   }

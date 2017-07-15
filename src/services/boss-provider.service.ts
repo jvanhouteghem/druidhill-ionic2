@@ -41,7 +41,6 @@ export class BossProviderService /*implements OnDestroy*/{
   }
 
   startRaidDmgOnBoss() {
-    console.log("startRaidDmgOnBoss");
     this.initializeHealthBar();
     let timer = Observable.timer(1000, 500);
     var observer = {
