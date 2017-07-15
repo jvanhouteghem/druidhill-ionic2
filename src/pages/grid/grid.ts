@@ -59,6 +59,8 @@ export class GridPage {
         }
         case GameState.GAME_STATUS_STOP: {
           this.stopGame();
+          this.raidProviderService.cleanRaid();
+          this.gameMessagerService.cleanMessages();
           this.navCtrl.push(AppComponent);
           break;
         }

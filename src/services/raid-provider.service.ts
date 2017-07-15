@@ -74,6 +74,10 @@ private raid:Hero[];
     return true;
   }
 
+  cleanRaid(){
+    this.raid = [];
+  }
+
   getRaid():Hero[]{
     return this.raid;
   }

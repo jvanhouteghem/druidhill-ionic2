@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Boss } from '../models/characters/boss';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from "rxjs";
@@ -12,7 +12,7 @@ import { AlertController } from 'ionic-angular';
 import { GameMessagerService, GameState} from './../services/game-messager.service';
 
 @Injectable()
-export class BossProviderService {
+export class BossProviderService /*implements OnDestroy*/{
 
   private boss: Boss;
   private bossPaternSubscriptions = [];
@@ -27,6 +27,11 @@ export class BossProviderService {
   ) {
   }
 
+  /*ngOnDestroy() {
+    this.stopRaidDmgOnBoss();
+    this.stopBossPaternSubscription();
+  }*/
+
   setBoss(boss: Boss) {
     this.boss = boss;
   }
@@ -36,6 +41,7 @@ export class BossProviderService {
   }
 
   startRaidDmgOnBoss() {
+    console.log("startRaidDmgOnBoss");
     this.initializeHealthBar();
     let timer = Observable.timer(1000, 500);
     var observer = {
@@ -49,13 +55,15 @@ export class BossProviderService {
         
         //isDead?
         if(this.getBoss().isDead()){
-          this.stopRaidDmgOnBoss(); // todo moove to observer event
-          this.stopBossPaternSubscription(); // todo moove to observer event
-          this.gameMessagerService.sendGameResultMessage(GameState.GAME_RESULT_WIN);
+          observer.complete();
         }
       },
       error: err => console.error('Observer got an error: ' + err),
-      complete: () => console.log('Observer got a complete notification : heal done'),
+      complete: () => {
+          this.stopRaidDmgOnBoss();
+          this.stopBossPaternSubscription();
+          this.gameMessagerService.sendGameResultMessage(GameState.GAME_RESULT_WIN);        
+      },
     };
 
     this.raidDmgOnBossSubscription = timer.subscribe(observer);

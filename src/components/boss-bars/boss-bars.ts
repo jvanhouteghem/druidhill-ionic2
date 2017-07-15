@@ -47,7 +47,7 @@ export class BossBarsComponent /*implements OnInit*/ {
     this.bossSpeechDisplay = true;
     setTimeout(() => {
       this.bossSpeechDisplay = false;
-    }, 1200);
+    }, this.configProviderService.getConfig().bossSpeechTimeDisplay);
   }
 
 }

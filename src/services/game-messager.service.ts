@@ -12,10 +12,22 @@ export enum GameState {
 }
 
 @Injectable()
-export class GameMessagerService {
+export class GameMessagerService{
 
     // Win / loose ...
     private gameResultSubject = new Subject<any>();
+    // Spell 1 used, spell 2 used ...
+    private spellSubject = new Subject<any>();
+
+    constructor(){
+        this.gameResultSubject = new Subject<any>();
+        this.spellSubject = new Subject<any>();
+    }
+
+    cleanMessages(){
+        this.gameResultSubject = new Subject<any>();
+        this.spellSubject = new Subject<any>();
+    }
  
     sendGameResultMessage(message: string | number) {
         this.gameResultSubject.next({ text: message });
@@ -24,10 +36,6 @@ export class GameMessagerService {
     getGameResultMessage(): Observable<any> {
         return this.gameResultSubject.asObservable();
     }
-    
-
-    // Spell 1 used, spell 2 used ...
-    private spellSubject = new Subject<any>();
 
     sendSpellMessage(message: string | number) {
         this.spellSubject.next({ text: message }); 
