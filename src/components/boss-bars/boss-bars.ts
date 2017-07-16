@@ -12,6 +12,7 @@ export class BossBarsComponent /*implements OnInit*/ {
 
   subscription: Subscription;
   bossSpeech:string;
+  bossSpeechList;
   bossSpeechDisplay:boolean = false;
 
   constructor(
@@ -20,6 +21,11 @@ export class BossBarsComponent /*implements OnInit*/ {
     private configProviderService: ConfigProviderService
   ) { 
     this.subscription = this.gameMessagerService.getGameResultMessage().subscribe(message => { this.gameResultMessageDispatcher(message.text) });
+    this.bossSpeechList = {
+      face: 'Ne touchez pas à mon visage !',
+      resume: 'Déjà de retour ? Je vous ai gardé quelques baffes en réserve.',
+      greetings: 'Salut bande de canailles ! Alors .. Prêt à jouer ?'
+    }
   }
 
   _getBossFormatHealth(){
@@ -29,11 +35,11 @@ export class BossBarsComponent /*implements OnInit*/ {
   gameResultMessageDispatcher(message){
       switch (message) {
         case GameState.GAME_STATUS_RESUME: {
-          this.bossSpeechPop("Déjà de retour ? Je vous ai gardé quelques baffes en réserve.");
+          this.bossSpeechPopDelay(this.bossSpeechList.face);
           break;
         }
         case GameState.GAME_STATUS_START: {
-          this.bossSpeechPop("Salut bande de canailles ! Alors .. Prêt à jouer ?");
+          this.bossSpeechPopDelay(this.bossSpeechList.greetings);
           break;
         }
         /*case GameState.GAME_STATUS_STOP: {
@@ -42,12 +48,18 @@ export class BossBarsComponent /*implements OnInit*/ {
       }
   }
 
-  bossSpeechPop(speech:string){
+
+  bossSpeechPopDelay(speech:string){
     this.bossSpeech = speech;
     this.bossSpeechDisplay = true;
-    setTimeout(() => {
-      this.bossSpeechDisplay = false;
-    }, this.configProviderService.getConfig().bossSpeechTimeDisplay);
+      setTimeout(() => {
+        this.bossSpeechDisplay = false;
+      }, this.configProviderService.getConfig().bossSpeechTimeDisplay);
+  }
+
+  bossSpeechPop(speech:string, display:boolean){
+    this.bossSpeech = speech;
+    this.bossSpeechDisplay = display;
   }
 
 }

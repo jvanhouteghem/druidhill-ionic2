@@ -1,6 +1,6 @@
 <div id="BossBars centerpanel">
   <!-- left -->
-  <div class="leftpanel" (click)="bossSpeechPop('Ne touchez pas à mon visage !')">
+  <div class="leftpanel" (click)="bossSpeechPop(bossSpeechList.face, !bossSpeechDisplay)">
     <img [hidden]='bossSpeechDisplay' src="assets/images/boss10.svg" class="boss" />
     <img [hidden]='!bossSpeechDisplay' src="assets/images/boss102.svg" class="boss boss-overlay" />
   </div>
