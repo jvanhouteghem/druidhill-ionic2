@@ -53,4 +53,8 @@ export class EndGamePage {
     this.viewCtrl.dismiss();
   }
 
+  /*getFinalScore(){
+    return (this.gameRegister.healDone / this.gameRegister.duration) - this.gameRegister.nbDeath * 100;
+  }*/
+
 }

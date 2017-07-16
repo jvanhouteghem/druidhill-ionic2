@@ -23,7 +23,7 @@
           <ion-icon name="star"></ion-icon>
           <ion-icon name="star-outline"></ion-icon>
           <ion-icon name="star-outline"></ion-icon>
-          (1250 pts)
+          ({{gameRegister.healDone/(gameRegister.duration/1000) - this.gameRegister.nbDeath * 100 | number : '1.0-0'}} pts)
         </div>
       </ion-item>
       <ion-item-divider>
