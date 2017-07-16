@@ -21,11 +21,11 @@ export class BossBarsComponent /*implements OnInit*/ {
     private configProviderService: ConfigProviderService
   ) { 
     this.subscription = this.gameMessagerService.getGameResultMessage().subscribe(message => { this.gameResultMessageDispatcher(message.text) });
-    this.bossSpeechList = {
-      face: 'Ne touchez pas à mon visage !',
-      resume: 'Déjà de retour ? Je vous ai gardé quelques baffes en réserve.',
-      greetings: 'Salut bande de canailles ! Alors .. Prêt à jouer ?'
-    }
+    this.bossSpeechList = [
+      {id: 'face', text:['Ne touchez pas à mon visage !', 'Vous êtes sourd ?']},
+      {id: 'resume', text: 'Déjà de retour ? Je vous ai gardé quelques baffes en réserve.'},
+      {id: 'greetings', text: 'Salut bande de canailles ! Alors .. Prêt à jouer ?'}
+    ]
   }
 
   _getBossFormatHealth(){
@@ -35,11 +35,11 @@ export class BossBarsComponent /*implements OnInit*/ {
   gameResultMessageDispatcher(message){
       switch (message) {
         case GameState.GAME_STATUS_RESUME: {
-          this.bossSpeechPopDelay(this.bossSpeechList.face);
+          this.bossSpeechPopDelay(this.getBossSpeechById('resume'));
           break;
         }
         case GameState.GAME_STATUS_START: {
-          this.bossSpeechPopDelay(this.bossSpeechList.greetings);
+          this.bossSpeechPopDelay(this.getBossSpeechById('greetings'));
           break;
         }
         /*case GameState.GAME_STATUS_STOP: {
@@ -57,9 +57,18 @@ export class BossBarsComponent /*implements OnInit*/ {
       }, this.configProviderService.getConfig().bossSpeechTimeDisplay);
   }
 
-  bossSpeechPop(speech:string, display:boolean){
-    this.bossSpeech = speech;
+  bossSpeechPop(speechId:string, display:boolean){
+    this.bossSpeech = this.getBossSpeechById(speechId);
     this.bossSpeechDisplay = display;
+  }
+
+  getBossSpeechById(speechId:string){
+    for (let i = 0 ; i < this.bossSpeechList.length ; i++){
+      if (speechId === this.bossSpeechList[i].id){
+        return this.bossSpeechList[i].text;
+      }
+    }
+    throw "Boss Speech Id not found";
   }
 
 }

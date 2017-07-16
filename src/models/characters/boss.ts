@@ -96,4 +96,12 @@ export class Boss extends Character {
         }
     }
 
+    /*getSpeech(){
+        return [
+            {id: 'face', text:'Ne touchez pas à mon visage !'},
+            {id: 'resume', text: 'Déjà de retour ? Je vous ai gardé quelques baffes en réserve.'},
+            {id: 'greetings', text: 'Salut bande de canailles ! Alors .. Prêt à jouer ?'}
+        ];
+    }*/
+
 }
